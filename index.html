@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Báo cáo sản phẩm - MEDCOMM</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; background: #f0f2f5; color: #333; }
+
+/* TOPBAR */
+.topbar { background:#1a2744; color:#fff; display:flex; align-items:center; padding:0 16px; height:46px; justify-content:space-between; position:sticky; top:0; z-index:100; }
+.topbar-logo { display:flex; align-items:center; gap:10px; font-weight:700; font-size:15px; }
+.logo-box { background:#e53935; color:#fff; width:32px; height:32px; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:13px; border-radius:4px; }
+.topbar-center { display:flex; align-items:center; gap:20px; font-size:12px; color:#cdd5e0; }
+.topbar-right { display:flex; align-items:center; gap:16px; font-size:12px; cursor:pointer; }
+.topbar-right span:hover { color:#90caf9; }
+.notif-badge { background:#e53935; color:#fff; border-radius:50%; width:16px; height:16px; display:inline-flex; align-items:center; justify-content:center; font-size:10px; }
+
+/* MENUBAR */
+.menubar { background:#fff; border-bottom:1px solid #e0e0e0; display:flex; align-items:center; padding:0 16px; height:38px; gap:4px; overflow-x:auto; white-space:nowrap; }
+.menubar a { color:#333; text-decoration:none; padding:6px 10px; border-radius:4px; font-size:12.5px; display:inline-flex; align-items:center; gap:5px; transition:background .15s; }
+.menubar a:hover { background:#e8f0fe; color:#1a73e8; }
+.menubar a.active { background:#e8f0fe; color:#1a73e8; font-weight:600; }
+
+/* LAYOUT */
+.layout { display:flex; min-height:calc(100vh - 84px); }
+
+/* SIDEBAR */
+.sidebar { width:210px; min-width:210px; background:#1a2744; color:#fff; padding:12px 10px; display:flex; flex-direction:column; gap:14px; }
+.sidebar-search { background:#253454; border:none; border-radius:4px; color:#fff; padding:7px 10px; width:100%; font-size:12px; display:flex; align-items:center; gap:6px; }
+.sidebar-search input { background:transparent; border:none; outline:none; color:#fff; width:100%; font-size:12px; }
+.sidebar-search input::placeholder { color:#8fa3c0; }
+.sidebar-section-title { background:#253454; color:#90b4d4; font-size:11.5px; font-weight:700; padding:6px 10px; border-radius:4px; text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px; }
+.radio-group { display:flex; flex-direction:column; gap:6px; padding:0 4px; }
+.radio-item { display:flex; align-items:center; gap:8px; color:#c8d8ea; font-size:12.5px; cursor:pointer; padding:4px 6px; border-radius:4px; transition:background .12s; }
+.radio-item:hover { background:#253454; }
+.radio-item input { accent-color:#42a5f5; cursor:pointer; }
+
+/* Branch dropdown */
+.branch-dropdown-wrapper { position:relative; }
+.branch-btn { width:100%; background:#253454; border:1px solid #3a5070; color:#c8d8ea; border-radius:4px; padding:7px 10px; font-size:12.5px; cursor:pointer; display:flex; align-items:center; justify-content:space-between; transition:background .12s; }
+.branch-btn:hover { background:#2e4266; }
+.branch-dropdown { display:none; position:absolute; top:calc(100% + 4px); left:0; right:0; background:#1e2e4a; border:1px solid #3a5070; border-radius:6px; z-index:200; box-shadow:0 4px 16px rgba(0,0,0,.4); padding:6px 0; min-width:190px; }
+.branch-dropdown.open { display:block; }
+.branch-dropdown-header { padding:6px 12px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #2e4266; margin-bottom:4px; }
+.branch-dropdown-header span { color:#8fa3c0; font-size:11px; }
+.branch-dropdown-header button { background:none; border:none; color:#42a5f5; font-size:11px; cursor:pointer; padding:0; }
+.branch-dropdown-item { display:flex; align-items:center; gap:8px; padding:6px 12px; color:#c8d8ea; font-size:12.5px; cursor:pointer; transition:background .1s; }
+.branch-dropdown-item:hover { background:#253454; }
+.branch-dropdown-item input { accent-color:#42a5f5; cursor:pointer; }
+.branch-selected-label { flex:1; text-align:left; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+/* Time presets */
+.time-presets { display:flex; flex-direction:column; gap:3px; padding:0 2px; }
+.time-preset-btn { background:transparent; border:1px solid transparent; color:#c8d8ea; border-radius:4px; padding:5px 8px; font-size:12px; cursor:pointer; text-align:left; transition:all .12s; }
+.time-preset-btn:hover { background:#253454; border-color:#3a5070; }
+.time-preset-btn.active { background:#1565c0; border-color:#42a5f5; color:#fff; font-weight:600; }
+.time-custom-label { color:#8fa3c0; font-size:11px; padding:4px 2px 2px; }
+.time-input-group label { color:#8fa3c0; font-size:11px; margin-bottom:2px; display:block; }
+.time-input-group input[type="date"] { width:100%; background:#253454; border:1px solid #3a5070; color:#c8d8ea; border-radius:4px; padding:6px 8px; font-size:12px; color-scheme:dark; margin-bottom:6px; }
+.time-input-group input[type="date"]:focus { outline:none; border-color:#42a5f5; }
+
+/* Product filter */
+.product-input { width:100%; background:#253454; border:1px solid #3a5070; color:#c8d8ea; border-radius:4px; padding:7px 10px; font-size:12px; margin-bottom:6px; }
+.product-input::placeholder { color:#5d7a9a; }
+.product-input:focus { outline:none; border-color:#42a5f5; }
+.product-select { width:100%; background:#253454; border:1px solid #3a5070; color:#c8d8ea; border-radius:4px; padding:7px 10px; font-size:12px; }
+.product-select:focus { outline:none; border-color:#42a5f5; }
+.product-select option { background:#1e2e4a; }
+.search-btn { width:100%; background:#1565c0; color:#fff; border:none; border-radius:5px; padding:9px; font-size:13px; font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px; transition:background .15s; margin-top:4px; }
+.search-btn:hover { background:#1976d2; }
+
+/* MAIN */
+.main { flex:1; padding:16px; overflow:auto; min-width:0; }
+.breadcrumb { color:#888; font-size:12px; margin-bottom:14px; }
+.breadcrumb a { color:#1a73e8; text-decoration:none; }
+
+.report-card { background:#fff; border-radius:8px; box-shadow:0 1px 4px rgba(0,0,0,.08); overflow:hidden; }
+.report-header { padding:16px 20px 12px; border-bottom:1px solid #f0f0f0; display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+.report-header-left h2 { font-size:17px; font-weight:700; color:#1a2744; text-transform:uppercase; letter-spacing:.3px; }
+.report-daterange { color:#1a73e8; font-size:13px; font-weight:500; margin-top:3px; }
+.report-actions { display:flex; gap:8px; }
+.btn-print { background:#fff; border:1.5px solid #b0bec5; color:#546e7a; border-radius:5px; padding:7px 14px; font-size:12.5px; cursor:pointer; display:flex; align-items:center; gap:5px; font-weight:500; transition:all .15s; }
+.btn-print:hover { background:#eceff1; }
+.btn-export { background:#1565c0; color:#fff; border:none; border-radius:5px; padding:7px 14px; font-size:12.5px; cursor:pointer; display:flex; align-items:center; gap:5px; font-weight:500; transition:background .15s; }
+.btn-export:hover { background:#1976d2; }
+
+/* TABLE */
+.table-wrapper { overflow-x:auto; }
+table { width:100%; border-collapse:collapse; font-size:12.5px; }
+thead tr { background:#f5f7fa; }
+th { padding:9px 10px; text-align:left; font-weight:600; color:#546e7a; border-bottom:2px solid #e8ecf0; white-space:nowrap; font-size:11.5px; text-transform:uppercase; letter-spacing:.3px; }
+th.num-col, td.num-col { text-align:right; }
+th.center-col, td.center-col { text-align:center; }
+td { padding:8px 10px; border-bottom:1px solid #f0f3f6; color:#333; white-space:nowrap; }
+tbody tr { transition:background .1s; }
+tbody tr:hover { background:#f8f9ff; }
+
+/* Grouped header for NCC */
+.th-group { background:#e8f0fe !important; color:#1565c0 !important; text-align:center !important; font-size:11px !important; border-bottom:1px solid #c5d8f7 !important; }
+.th-sub { background:#f5f7fa; }
+
+.tfoot-row { background:#fffde7 !important; font-weight:700; }
+.tfoot-row td { border-top:2px solid #f9e400; border-bottom:none; }
+
+.product-name { color:#1a73e8; font-weight:500; }
+.currency { color:#1a237e; }
+.lot-badge { background:#e8f5e9; color:#2e7d32; border-radius:3px; padding:2px 7px; font-size:11.5px; font-weight:500; display:inline-block; }
+.hsd-badge { background:#fce4ec; color:#c62828; border-radius:3px; padding:2px 7px; font-size:11.5px; }
+.hsd-ok { background:#e8f5e9; color:#2e7d32; }
+.hsd-warn { background:#fff3e0; color:#e65100; }
+.hsd-exp { background:#fce4ec; color:#c62828; }
+
+.btn-detail { background:#fff; border:1.5px solid #b0bec5; color:#546e7a; border-radius:4px; padding:4px 10px; font-size:11.5px; cursor:pointer; display:inline-flex; align-items:center; gap:4px; white-space:nowrap; transition:all .12s; }
+.btn-detail:hover { background:#e3f2fd; border-color:#42a5f5; color:#1565c0; }
+
+/* PAGINATION */
+.pagination-bar { display:flex; align-items:center; justify-content:flex-end; padding:12px 20px; gap:8px; border-top:1px solid #f0f3f6; flex-wrap:wrap; }
+.page-size-select { border:1px solid #cdd5e0; border-radius:4px; padding:4px 6px; font-size:12.5px; color:#333; background:#fff; }
+.page-info { color:#888; font-size:12.5px; }
+.page-btns { display:flex; gap:3px; }
+.page-btn { width:28px; height:28px; border:1px solid #cdd5e0; background:#fff; border-radius:4px; cursor:pointer; font-size:12.5px; display:flex; align-items:center; justify-content:center; transition:all .12s; }
+.page-btn:hover:not(:disabled) { background:#e8f0fe; border-color:#42a5f5; color:#1a73e8; }
+.page-btn.active { background:#1565c0; border-color:#1565c0; color:#fff; font-weight:600; }
+.page-btn:disabled { opacity:.35; cursor:not-allowed; }
+
+.site-footer { background:#fff; text-align:center; padding:10px; font-size:11.5px; color:#aaa; border-top:1px solid #e8e8e8; }
+
+/* Empty state */
+.empty-state { padding:48px; text-align:center; color:#aaa; font-size:14px; }
+
+@media print {
+  .sidebar, .topbar, .menubar, .report-actions, .pagination-bar, .site-footer { display:none !important; }
+  .main { padding:0; }
+  .report-card { box-shadow:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-logo">
+    <div class="logo-box">M</div>
+    <span>TRUNGTAM</span>
+  </div>
+  <div class="topbar-center">
+    <span>📞 19008960 NHÁNH 1</span>
+    <span>📅 <span id="topbar-date"></span></span>
+  </div>
+  <div class="topbar-right">
+    <span>🌐 Tiện ích</span>
+    <span>🕐 Lịch sử xuất tệp</span>
+    <span>⚙ Quản lý hệ thống</span>
+    <span>🔔 <span class="notif-badge">0</span></span>
+    <span>👤</span>
+  </div>
+</div>
+
+<!-- MENUBAR -->
+<div class="menubar">
+  <a href="#">🏠 Tổng quan</a>
+  <a href="#">📦 Sản phẩm ▾</a>
+  <a href="#">💰 Giao dịch ▾</a>
+  <a href="#">🤝 Đối tác ▾</a>
+  <a href="#">🏪 Kho ▾</a>
+  <a href="#">💵 Sổ quỹ thu chi</a>
+  <a href="#">👥 Nhân viên ▾</a>
+  <a href="#" class="active">📊 Báo cáo ▾</a>
+  <a href="#">🗄 Dữ liệu liên thông ▾</a>
+  <a href="#">📈 Số theo dõi ▾</a>
+  <a href="#">🛒 Bán online ▾</a>
+  <a href="#">🏬 Bán hàng</a>
+</div>
+
+<div class="layout">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-search">
+      <span>🔍</span>
+      <input type="text" placeholder="Tìm kiếm">
+    </div>
+
+    <!-- Tiêu chí -->
+    <div>
+      <div class="sidebar-section-title">Tiêu chí</div>
+      <div class="radio-group">
+        <label class="radio-item">
+          <input type="radio" name="tieu_chi" value="ban_hang" checked> Bán hàng
+        </label>
+        <label class="radio-item">
+          <input type="radio" name="tieu_chi" value="doanh_thu"> Doanh thu
+        </label>
+        <label class="radio-item">
+          <input type="radio" name="tieu_chi" value="thuoc_ks"> Thuốc kiểm soát đặc biệt
+        </label>
+        <label class="radio-item">
+          <input type="radio" name="tieu_chi" value="nhap_hang"> Nhập hàng NCC
+        </label>
+      </div>
+    </div>
+
+    <!-- Chi nhánh -->
+    <div>
+      <div class="sidebar-section-title">Chi nhánh</div>
+      <div class="branch-dropdown-wrapper">
+        <button class="branch-btn" id="branchBtn" onclick="toggleBranchDropdown()">
+          <span class="branch-selected-label" id="branchLabel">Tất cả chi nhánh</span>
+          <span>▾</span>
+        </button>
+        <div class="branch-dropdown" id="branchDropdown">
+          <div class="branch-dropdown-header">
+            <span>Chọn chi nhánh</span>
+            <button onclick="selectAllBranches()">Chọn tất cả</button>
+          </div>
+          <label class="branch-dropdown-item"><input type="checkbox" class="branch-cb" value="cn1" checked> CN1 - Trung Tâm</label>
+          <label class="branch-dropdown-item"><input type="checkbox" class="branch-cb" value="cn2" checked> CN2 - Quận 1</label>
+          <label class="branch-dropdown-item"><input type="checkbox" class="branch-cb" value="cn3" checked> CN3 - Quận 3</label>
+          <label class="branch-dropdown-item"><input type="checkbox" class="branch-cb" value="cn4" checked> CN4 - Bình Thạnh</label>
+          <label class="branch-dropdown-item"><input type="checkbox" class="branch-cb" value="cn5" checked> CN5 - Gò Vấp</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Thời gian -->
+    <div>
+      <div class="sidebar-section-title">Thời gian</div>
+      <div class="time-presets">
+        <button class="time-preset-btn" data-preset="yesterday">Hôm qua</button>
+        <button class="time-preset-btn" data-preset="today">Hôm nay</button>
+        <button class="time-preset-btn" data-preset="this_week">Tuần này</button>
+        <button class="time-preset-btn" data-preset="last_7">7 ngày qua</button>
+        <button class="time-preset-btn" data-preset="this_month">Tháng này</button>
+        <button class="time-preset-btn active" data-preset="last_month">Tháng trước</button>
+        <button class="time-preset-btn" data-preset="last_60">60 ngày trước</button>
+        <button class="time-preset-btn" data-preset="this_quarter">Quý này</button>
+        <button class="time-preset-btn" data-preset="last_quarter">Quý trước</button>
+        <button class="time-preset-btn" data-preset="custom">Tùy chỉnh</button>
+      </div>
+      <div class="time-custom-label" style="margin-top:8px">Khoảng thời gian</div>
+      <div style="margin-top:6px">
+        <div class="time-input-group">
+          <label>Từ ngày</label>
+          <input type="date" id="dateFrom">
+        </div>
+        <div class="time-input-group">
+          <label>Đến ngày</label>
+          <input type="date" id="dateTo">
+        </div>
+      </div>
+    </div>
+
+    <!-- Sản phẩm / NCC filter -->
+    <div id="productSection">
+      <div class="sidebar-section-title" id="productSectionTitle">Sản phẩm</div>
+      <input type="text" class="product-input" id="productSearch" placeholder="Nhập tên hoặc mã">
+      <select class="product-select" id="productGroup">
+        <option value="">Nhóm sản phẩm</option>
+        <option value="thuoc">Thuốc</option>
+        <option value="thuc_pham">Thực phẩm chức năng</option>
+        <option value="my_pham">Mỹ phẩm</option>
+        <option value="thiet_bi">Thiết bị y tế</option>
+      </select>
+      <button class="search-btn" style="margin-top:8px" onclick="runProductSearch()">🔍 Tìm kiếm</button>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="breadcrumb"><a href="#">Trang chủ</a> / <span id="breadcrumbCurrent">Báo cáo bán hàng</span></div>
+
+    <div class="report-card">
+      <div class="report-header">
+        <div class="report-header-left">
+          <h2 id="reportTitle">BÁO CÁO BÁN HÀNG THEO SẢN PHẨM</h2>
+          <div class="report-daterange" id="reportDateRange"></div>
+        </div>
+        <div class="report-actions">
+          <button class="btn-print" onclick="window.print()">🖨 In</button>
+          <button class="btn-export" onclick="exportCSV()">📤 Xuất dữ liệu</button>
+        </div>
+      </div>
+
+      <div class="table-wrapper" id="tableWrapper">
+        <div class="empty-state">Đang tải dữ liệu...</div>
+      </div>
+
+      <div class="pagination-bar">
+        <select class="page-size-select" id="pageSizeSelect" onchange="changePageSize()">
+          <option value="10">10</option>
+          <option value="20" selected>20</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+        <span class="page-info" id="pageInfo"></span>
+        <div class="page-btns" id="pageBtns"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="site-footer">© 2020 © MEDCOMM VERSION: 2.3.3-05.04.23</div>
+
+<script>
+// =====================================================================
+// MOCK DATA
+// =====================================================================
+const BRANCHES = ['cn1','cn2','cn3','cn4','cn5'];
+const BRANCH_NAMES = { cn1:'CN1-Trung Tâm', cn2:'CN2-Quận 1', cn3:'CN3-Quận 3', cn4:'CN4-Bình Thạnh', cn5:'CN5-Gò Vấp' };
+
+function rnd(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+function rndPick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+// ── BÁN HÀNG DATA (product-lot level, one row per lot) ──
+const BAN_HANG_RAW = [
+  // Format: {ma, ten, donvi, lo, hsd, sl, tong_tien, thue, giam_gia, phai_tra, branch, date}
+  {ma:'SP00000001',ten:'Thuốc 1',donvi:'Bình',lo:'LO2024001A',hsd:'2026-12-31',sl:10,tong_tien:500000,thue:0,giam_gia:0,phai_tra:500000,branch:'cn1',date:'2026-04-05'},
+  {ma:'SP00000001',ten:'Thuốc 1',donvi:'Bình',lo:'LO2024001B',hsd:'2027-03-15',sl:11,tong_tien:550000,thue:0,giam_gia:0,phai_tra:550000,branch:'cn2',date:'2026-04-05'},
+  {ma:'SP00000003',ten:'Pantin 40',donvi:'Viên',lo:'LO2024003',hsd:'2026-08-20',sl:1,tong_tien:23999,thue:0,giam_gia:0,phai_tra:23999,branch:'cn1',date:'2026-04-07'},
+  {ma:'SP00000004',ten:'Bông gòn',donvi:'Bộ',lo:'LO2024004',hsd:'2027-01-10',sl:5,tong_tien:250000,thue:0,giam_gia:0,phai_tra:250000,branch:'cn3',date:'2026-04-08'},
+  {ma:'SP00000005',ten:'Encorate',donvi:'Viên',lo:'LO2024005A',hsd:'2026-06-30',sl:1,tong_tien:1500,thue:0,giam_gia:0,phai_tra:1500,branch:'cn1',date:'2026-04-10'},
+  {ma:'SP00000005',ten:'Encorate',donvi:'Viên',lo:'LO2024005B',hsd:'2026-09-30',sl:2,tong_tien:6000,thue:0,giam_gia:0,phai_tra:6000,branch:'cn2',date:'2026-04-12'},
+  {ma:'SP00000009',ten:'Sugammadex Injection 500mg/5ml',donvi:'Lọ',lo:'LO2024009',hsd:'2026-05-15',sl:3,tong_tien:60000,thue:0,giam_gia:0,phai_tra:60000,branch:'cn4',date:'2026-04-15'},
+  {ma:'SP00002641',ten:'Deslomeyer 1',donvi:'Vỉ',lo:'LO2024641',hsd:'2026-11-20',sl:1,tong_tien:50000,thue:0,giam_gia:0,phai_tra:50000,branch:'cn1',date:'2026-04-18'},
+  {ma:'SP00000013',ten:'Brizoton',donvi:'Lọ',lo:'LO2024013',hsd:'2027-02-28',sl:1,tong_tien:20000,thue:0,giam_gia:0,phai_tra:20000,branch:'cn5',date:'2026-04-20'},
+  {ma:'SP00000020',ten:'Zukalon 250 mcg/5ml',donvi:'Cái',lo:'LO2024020',hsd:'2026-10-05',sl:1,tong_tien:500000,thue:0,giam_gia:0,phai_tra:500000,branch:'cn3',date:'2026-04-22'},
+  {ma:'SP00000025',ten:'Amoxicillin 500mg',donvi:'Viên',lo:'LO2024025A',hsd:'2026-07-15',sl:20,tong_tien:60000,thue:0,giam_gia:5000,phai_tra:55000,branch:'cn1',date:'2026-04-23'},
+  {ma:'SP00000025',ten:'Amoxicillin 500mg',donvi:'Viên',lo:'LO2024025B',hsd:'2026-12-15',sl:10,tong_tien:30000,thue:0,giam_gia:0,phai_tra:30000,branch:'cn2',date:'2026-04-24'},
+  {ma:'SP00000031',ten:'Paracetamol 500mg',donvi:'Viên',lo:'LO2024031',hsd:'2027-04-30',sl:50,tong_tien:75000,thue:0,giam_gia:0,phai_tra:75000,branch:'cn4',date:'2026-04-25'},
+  {ma:'SP00000042',ten:'Vitamin C 1000mg',donvi:'Viên',lo:'LO2024042',hsd:'2026-03-31',sl:60,tong_tien:180000,thue:0,giam_gia:10000,phai_tra:170000,branch:'cn5',date:'2026-04-26'},
+  {ma:'SP00000055',ten:'Omeprazole 20mg',donvi:'Viên',lo:'LO2024055',hsd:'2026-09-10',sl:14,tong_tien:42000,thue:0,giam_gia:0,phai_tra:42000,branch:'cn3',date:'2026-04-27'},
+  {ma:'SP00000067',ten:'Metformin 850mg',donvi:'Viên',lo:'LO2024067',hsd:'2027-06-20',sl:90,tong_tien:135000,thue:0,giam_gia:0,phai_tra:135000,branch:'cn1',date:'2026-04-28'},
+  {ma:'SP00000078',ten:'Atorvastatin 20mg',donvi:'Viên',lo:'LO2024078A',hsd:'2026-08-31',sl:30,tong_tien:90000,thue:0,giam_gia:5000,phai_tra:85000,branch:'cn2',date:'2026-04-29'},
+  {ma:'SP00000078',ten:'Atorvastatin 20mg',donvi:'Viên',lo:'LO2024078B',hsd:'2027-01-31',sl:15,tong_tien:45000,thue:0,giam_gia:0,phai_tra:45000,branch:'cn3',date:'2026-04-29'},
+  {ma:'SP00000089',ten:'Losartan 50mg',donvi:'Viên',lo:'LO2024089',hsd:'2026-11-15',sl:60,tong_tien:120000,thue:0,giam_gia:0,phai_tra:120000,branch:'cn4',date:'2026-04-30'},
+  {ma:'SP00000101',ten:'Amlodipine 5mg',donvi:'Viên',lo:'LO2024101',hsd:'2027-03-10',sl:30,tong_tien:45000,thue:0,giam_gia:0,phai_tra:45000,branch:'cn5',date:'2026-04-30'},
+  // March data
+  {ma:'SP00000001',ten:'Thuốc 1',donvi:'Bình',lo:'LO2024001A',hsd:'2026-12-31',sl:8,tong_tien:400000,thue:0,giam_gia:0,phai_tra:400000,branch:'cn1',date:'2026-03-10'},
+  {ma:'SP00000031',ten:'Paracetamol 500mg',donvi:'Viên',lo:'LO2024031',hsd:'2027-04-30',sl:40,tong_tien:60000,thue:0,giam_gia:0,phai_tra:60000,branch:'cn2',date:'2026-03-15'},
+  {ma:'SP00000042',ten:'Vitamin C 1000mg',donvi:'Viên',lo:'LO2024042',hsd:'2026-03-31',sl:30,tong_tien:90000,thue:0,giam_gia:5000,phai_tra:85000,branch:'cn3',date:'2026-03-20'},
+  // May data
+  {ma:'SP00000003',ten:'Pantin 40',donvi:'Viên',lo:'LO2024003',hsd:'2026-08-20',sl:2,tong_tien:47998,thue:0,giam_gia:0,phai_tra:47998,branch:'cn1',date:'2026-05-02'},
+  {ma:'SP00000067',ten:'Metformin 850mg',donvi:'Viên',lo:'LO2024067',hsd:'2027-06-20',sl:60,tong_tien:90000,thue:0,giam_gia:0,phai_tra:90000,branch:'cn2',date:'2026-05-03'},
+];
+
+// ── DOANH THU DATA (per day per branch) ──
+const DOANH_THU_RAW = [];
+(function generateDoanhThu() {
+  const days = [];
+  let d = new Date('2026-03-01');
+  const end = new Date('2026-05-05');
+  while (d <= end) { days.push(d.toISOString().split('T')[0]); d.setDate(d.getDate()+1); }
+  const seed = [12,7,5,18,9,3,15,22,8,11,6,14,20,4,16];
+  let si = 0;
+  days.forEach(date => {
+    BRANCHES.forEach((br, bi) => {
+      const base = seed[(si++ + bi) % seed.length];
+      const dt = base + bi*2;
+      const doanh_thu = dt * 850000 + rnd(100000,500000);
+      const vat = Math.floor(doanh_thu * 0.05);
+      const sl_tra = rnd(0, Math.floor(dt/4));
+      const gia_tri_tra = sl_tra * rnd(80000,300000);
+      DOANH_THU_RAW.push({ date, branch: br, sl_don_ban: dt, vat, doanh_thu, sl_don_tra: sl_tra, gia_tri_tra, thuc_thu: doanh_thu - gia_tri_tra });
+    });
+  });
+})();
+
+// ── THUỐC KIỂM SOÁT ĐẶC BIỆT DATA ──
+const THUOC_KS_DATA = [
+  {ma:'TKSDB001',ten:'Morphine Sulfate 10mg',don_vi:'Ống',lo:'LO-MS-001',hsd:'2026-06-30',sl:5,thoi_gian:'2026-04-05 09:15',ghi_chu:'Điều trị đau ung thư',branch:'cn1',date:'2026-04-05'},
+  {ma:'TKSDB002',ten:'Fentanyl Patch 25mcg/h',don_vi:'Miếng',lo:'LO-FP-002',hsd:'2026-08-15',sl:3,thoi_gian:'2026-04-08 10:30',ghi_chu:'Bệnh nhân sau phẫu thuật',branch:'cn1',date:'2026-04-08'},
+  {ma:'TKSDB003',ten:'Oxycodone HCl 10mg',don_vi:'Viên',lo:'LO-OX-003',hsd:'2026-09-20',sl:10,thoi_gian:'2026-04-10 14:20',ghi_chu:'Kê đơn BS Nguyễn Văn A',branch:'cn2',date:'2026-04-10'},
+  {ma:'TKSDB004',ten:'Tramadol 100mg',don_vi:'Ống',lo:'LO-TR-004',hsd:'2026-07-31',sl:8,thoi_gian:'2026-04-12 08:45',ghi_chu:'',branch:'cn3',date:'2026-04-12'},
+  {ma:'TKSDB005',ten:'Diazepam 5mg',don_vi:'Viên',lo:'LO-DZ-005A',hsd:'2026-05-10',sl:20,thoi_gian:'2026-04-15 16:00',ghi_chu:'Hết lô mới nhập thêm',branch:'cn1',date:'2026-04-15'},
+  {ma:'TKSDB005',ten:'Diazepam 5mg',don_vi:'Viên',lo:'LO-DZ-005B',hsd:'2026-11-30',sl:15,thoi_gian:'2026-04-15 16:30',ghi_chu:'',branch:'cn4',date:'2026-04-15'},
+  {ma:'TKSDB006',ten:'Codeine Phosphate 30mg',don_vi:'Viên',lo:'LO-CP-006',hsd:'2026-10-25',sl:12,thoi_gian:'2026-04-18 11:10',ghi_chu:'BS Trần Thị B kê đơn',branch:'cn2',date:'2026-04-18'},
+  {ma:'TKSDB007',ten:'Ketamine 500mg/10ml',don_vi:'Lọ',lo:'LO-KT-007',hsd:'2027-01-20',sl:2,thoi_gian:'2026-04-20 09:00',ghi_chu:'Phòng mổ',branch:'cn1',date:'2026-04-20'},
+  {ma:'TKSDB008',ten:'Phenobarbital 30mg',don_vi:'Viên',lo:'LO-PB-008',hsd:'2026-12-10',sl:30,thoi_gian:'2026-04-22 13:45',ghi_chu:'Động kinh mãn tính',branch:'cn5',date:'2026-04-22'},
+  {ma:'TKSDB001',ten:'Morphine Sulfate 10mg',don_vi:'Ống',lo:'LO-MS-001',hsd:'2026-06-30',sl:3,thoi_gian:'2026-04-25 10:20',ghi_chu:'Tái khám',branch:'cn3',date:'2026-04-25'},
+  {ma:'TKSDB009',ten:'Buprenorphine 8mg',don_vi:'Viên',lo:'LO-BP-009',hsd:'2026-09-15',sl:7,thoi_gian:'2026-04-28 08:30',ghi_chu:'',branch:'cn1',date:'2026-04-28'},
+  {ma:'TKSDB003',ten:'Oxycodone HCl 10mg',don_vi:'Viên',lo:'LO-OX-003',hsd:'2026-09-20',sl:5,thoi_gian:'2026-03-15 14:00',ghi_chu:'',branch:'cn2',date:'2026-03-15'},
+  {ma:'TKSDB004',ten:'Tramadol 100mg',don_vi:'Ống',lo:'LO-TR-004',hsd:'2026-07-31',sl:6,thoi_gian:'2026-05-02 09:00',ghi_chu:'',branch:'cn1',date:'2026-05-02'},
+];
+
+// ── NHẬP HÀNG NCC DATA ──
+const NHAP_HANG_DATA = [
+  {ma_ncc:'NCC001',ten_ncc:'Công ty TNHH Dược Phẩm Sài Gòn',sl_nhap:500,tong_tien_nhap:25000000,giam_gia_nhap:500000,vat_nhap:1225000,gia_tri_nhap:25725000,sl_tra:20,tong_tien_tra:1000000,giam_gia_tra:0,vat_tra:50000,gia_tri_tra:1050000,tong_tien_net:24675000,branch:'cn1',date:'2026-04-03'},
+  {ma_ncc:'NCC002',ten_ncc:'Công ty CP Dược Hậu Giang',sl_nhap:1200,tong_tien_nhap:48000000,giam_gia_nhap:960000,vat_nhap:2352000,gia_tri_nhap:49392000,sl_tra:0,tong_tien_tra:0,giam_gia_tra:0,vat_tra:0,gia_tri_tra:0,tong_tien_net:49392000,branch:'cn1',date:'2026-04-05'},
+  {ma_ncc:'NCC003',ten_ncc:'Công ty TNHH Zuellig Pharma',sl_nhap:300,tong_tien_nhap:120000000,giam_gia_nhap:2400000,vat_nhap:5880000,gia_tri_nhap:123480000,sl_tra:5,tong_tien_tra:2000000,giam_gia_tra:0,vat_tra:100000,gia_tri_tra:2100000,tong_tien_net:121380000,branch:'cn2',date:'2026-04-08'},
+  {ma_ncc:'NCC004',ten_ncc:'Công ty TNHH Mega Lifesciences',sl_nhap:800,tong_tien_nhap:32000000,giam_gia_nhap:640000,vat_nhap:1568000,gia_tri_nhap:32928000,sl_tra:30,tong_tien_tra:1200000,giam_gia_tra:0,vat_tra:60000,gia_tri_tra:1260000,tong_tien_net:31668000,branch:'cn3',date:'2026-04-10'},
+  {ma_ncc:'NCC001',ten_ncc:'Công ty TNHH Dược Phẩm Sài Gòn',sl_nhap:400,tong_tien_nhap:20000000,giam_gia_nhap:400000,vat_nhap:980000,gia_tri_nhap:20580000,sl_tra:0,tong_tien_tra:0,giam_gia_tra:0,vat_tra:0,gia_tri_tra:0,tong_tien_net:20580000,branch:'cn4',date:'2026-04-12'},
+  {ma_ncc:'NCC005',ten_ncc:'Công ty CP Traphaco',sl_nhap:600,tong_tien_nhap:18000000,giam_gia_nhap:360000,vat_nhap:882000,gia_tri_nhap:18522000,sl_tra:10,tong_tien_tra:300000,giam_gia_tra:0,vat_tra:15000,gia_tri_tra:315000,tong_tien_net:18207000,branch:'cn5',date:'2026-04-15'},
+  {ma_ncc:'NCC002',ten_ncc:'Công ty CP Dược Hậu Giang',sl_nhap:900,tong_tien_nhap:36000000,giam_gia_nhap:720000,vat_nhap:1764000,gia_tri_nhap:37044000,sl_tra:0,tong_tien_tra:0,giam_gia_tra:0,vat_tra:0,gia_tri_tra:0,tong_tien_net:37044000,branch:'cn1',date:'2026-04-18'},
+  {ma_ncc:'NCC006',ten_ncc:'Công ty TNHH Sanafi Aventis',sl_nhap:200,tong_tien_nhap:80000000,giam_gia_nhap:1600000,vat_nhap:3920000,gia_tri_nhap:82320000,sl_tra:2,tong_tien_tra:800000,giam_gia_tra:0,vat_tra:40000,gia_tri_tra:840000,tong_tien_net:81480000,branch:'cn2',date:'2026-04-20'},
+  {ma_ncc:'NCC003',ten_ncc:'Công ty TNHH Zuellig Pharma',sl_nhap:150,tong_tien_nhap:60000000,giam_gia_nhap:1200000,vat_nhap:2940000,gia_tri_nhap:61740000,sl_tra:0,tong_tien_tra:0,giam_gia_tra:0,vat_tra:0,gia_tri_tra:0,tong_tien_net:61740000,branch:'cn3',date:'2026-04-25'},
+  {ma_ncc:'NCC004',ten_ncc:'Công ty TNHH Mega Lifesciences',sl_nhap:700,tong_tien_nhap:28000000,giam_gia_nhap:560000,vat_nhap:1372000,gia_tri_nhap:28812000,sl_tra:0,tong_tien_tra:0,giam_gia_tra:0,vat_tra:0,gia_tri_tra:0,tong_tien_net:28812000,branch:'cn4',date:'2026-04-28'},
+  // March
+  {ma_ncc:'NCC001',ten_ncc:'Công ty TNHH Dược Phẩm Sài Gòn',sl_nhap:600,tong_tien_nhap:30000000,giam_gia_nhap:600000,vat_nhap:1470000,gia_tri_nhap:30870000,sl_tra:0,tong_tien_tra:0,giam_gia_tra:0,vat_tra:0,gia_tri_tra:0,tong_tien_net:30870000,branch:'cn1',date:'2026-03-10'},
+  {ma_ncc:'NCC005',ten_ncc:'Công ty CP Traphaco',sl_nhap:400,tong_tien_nhap:12000000,giam_gia_nhap:240000,vat_nhap:588000,gia_tri_nhap:12348000,sl_tra:5,tong_tien_tra:150000,giam_gia_tra:0,vat_tra:7500,gia_tri_tra:157500,tong_tien_net:12190500,branch:'cn2',date:'2026-03-20'},
+  // May
+  {ma_ncc:'NCC002',ten_ncc:'Công ty CP Dược Hậu Giang',sl_nhap:1000,tong_tien_nhap:40000000,giam_gia_nhap:800000,vat_nhap:1960000,gia_tri_nhap:41160000,sl_tra:0,tong_tien_tra:0,giam_gia_tra:0,vat_tra:0,gia_tri_tra:0,tong_tien_net:41160000,branch:'cn1',date:'2026-05-02'},
+];
+
+// =====================================================================
+// STATE
+// =====================================================================
+const state = {
+  tieu_chi: 'ban_hang',
+  currentPage: 1,
+  pageSize: 20,
+  filteredData: [],
+  productKeyword: '',
+};
+
+// =====================================================================
+// INIT
+// =====================================================================
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('topbar-date').textContent = new Date().toLocaleDateString('vi-VN');
+
+  // Set default "tháng trước" (April 2026)
+  setPreset('last_month');
+  document.querySelector('[data-preset="last_month"]').classList.add('active');
+
+  // Event: tiêu chí
+  document.querySelectorAll('input[name="tieu_chi"]').forEach(r => {
+    r.addEventListener('change', () => {
+      state.tieu_chi = r.value;
+      state.currentPage = 1;
+      updateProductSection();
+      applyFilters();
+    });
+  });
+
+  // Event: branch checkboxes (auto-update)
+  document.querySelectorAll('.branch-cb').forEach(cb => {
+    cb.addEventListener('change', () => { updateBranchLabel(); applyFilters(); });
+  });
+
+  // Event: time preset buttons
+  document.querySelectorAll('.time-preset-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.time-preset-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const preset = btn.dataset.preset;
+      if (preset !== 'custom') { setPreset(preset); applyFilters(); }
+    });
+  });
+
+  // Event: date inputs (auto-update)
+  ['dateFrom','dateTo'].forEach(id => {
+    document.getElementById(id).addEventListener('change', () => {
+      document.querySelectorAll('.time-preset-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('[data-preset="custom"]').classList.add('active');
+      applyFilters();
+    });
+  });
+
+  // Close branch dropdown on outside click
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.branch-dropdown-wrapper')) {
+      document.getElementById('branchDropdown').classList.remove('open');
+    }
+  });
+
+  // Page size change
+  document.getElementById('pageSizeSelect').addEventListener('change', changePageSize);
+
+  updateBranchLabel();
+  updateProductSection();
+  applyFilters();
+});
+
+// =====================================================================
+// BRANCH
+// =====================================================================
+function toggleBranchDropdown() {
+  document.getElementById('branchDropdown').classList.toggle('open');
+}
+function updateBranchLabel() {
+  const cbs = [...document.querySelectorAll('.branch-cb')];
+  const checked = cbs.filter(c => c.checked);
+  const lbl = document.getElementById('branchLabel');
+  if (checked.length === 0) lbl.textContent = 'Chưa chọn chi nhánh';
+  else if (checked.length === cbs.length) lbl.textContent = 'Tất cả chi nhánh';
+  else lbl.textContent = checked.length + ' chi nhánh đã chọn';
+}
+function selectAllBranches() {
+  document.querySelectorAll('.branch-cb').forEach(cb => { cb.checked = true; });
+  updateBranchLabel();
+  applyFilters();
+}
+function getSelectedBranches() {
+  return [...document.querySelectorAll('.branch-cb:checked')].map(c => c.value);
+}
+
+// =====================================================================
+// TIME PRESETS
+// =====================================================================
+function fmtDateISO(d) { return d.toISOString().split('T')[0]; }
+function setPreset(type) {
+  const now = new Date();
+  let from, to;
+  switch (type) {
+    case 'yesterday': { const y=new Date(now); y.setDate(y.getDate()-1); from=to=fmtDateISO(y); break; }
+    case 'today': from=to=fmtDateISO(now); break;
+    case 'this_week': {
+      const day = now.getDay()===0?6:now.getDay()-1;
+      const mon=new Date(now); mon.setDate(now.getDate()-day);
+      from=fmtDateISO(mon); to=fmtDateISO(now); break;
+    }
+    case 'last_7': { const s=new Date(now); s.setDate(s.getDate()-6); from=fmtDateISO(s); to=fmtDateISO(now); break; }
+    case 'this_month': from=fmtDateISO(new Date(now.getFullYear(),now.getMonth(),1)); to=fmtDateISO(new Date(now.getFullYear(),now.getMonth()+1,0)); break;
+    case 'last_month': from=fmtDateISO(new Date(now.getFullYear(),now.getMonth()-1,1)); to=fmtDateISO(new Date(now.getFullYear(),now.getMonth(),0)); break;
+    case 'last_60': { const s=new Date(now); s.setDate(s.getDate()-59); from=fmtDateISO(s); to=fmtDateISO(now); break; }
+    case 'this_quarter': { const q=Math.floor(now.getMonth()/3); from=fmtDateISO(new Date(now.getFullYear(),q*3,1)); to=fmtDateISO(new Date(now.getFullYear(),q*3+3,0)); break; }
+    case 'last_quarter': { const q=Math.floor(now.getMonth()/3); const pq=q===0?3:q-1; const yr=q===0?now.getFullYear()-1:now.getFullYear(); from=fmtDateISO(new Date(yr,pq*3,1)); to=fmtDateISO(new Date(yr,pq*3+3,0)); break; }
+    default: return;
+  }
+  document.getElementById('dateFrom').value = from;
+  document.getElementById('dateTo').value = to;
+}
+
+// =====================================================================
+// PRODUCT SECTION TOGGLE
+// =====================================================================
+function updateProductSection() {
+  const tc = state.tieu_chi;
+  const sec = document.getElementById('productSection');
+  const title = document.getElementById('productSectionTitle');
+  const grpEl = document.getElementById('productGroup');
+
+  if (tc === 'doanh_thu') {
+    sec.style.display = 'none';
+  } else if (tc === 'nhap_hang') {
+    sec.style.display = '';
+    title.textContent = 'Nhà cung cấp';
+    document.getElementById('productSearch').placeholder = 'Nhập tên hoặc mã NCC';
+    grpEl.style.display = 'none';
+  } else {
+    sec.style.display = '';
+    title.textContent = 'Sản phẩm';
+    document.getElementById('productSearch').placeholder = 'Nhập tên hoặc mã';
+    grpEl.style.display = '';
+  }
+
+  const titles = {
+    ban_hang:  'BÁO CÁO BÁN HÀNG THEO SẢN PHẨM',
+    doanh_thu: 'BÁO CÁO DOANH THU',
+    thuoc_ks:  'BÁO CÁO THUỐC KIỂM SOÁT ĐẶC BIỆT',
+    nhap_hang: 'BÁO CÁO NHẬP HÀNG NHÀ CUNG CẤP',
+  };
+  const breadcrumbs = {
+    ban_hang: 'Báo cáo bán hàng', doanh_thu: 'Báo cáo doanh thu',
+    thuoc_ks: 'Thuốc kiểm soát đặc biệt', nhap_hang: 'Nhập hàng NCC',
+  };
+  document.getElementById('reportTitle').textContent = titles[tc];
+  document.getElementById('breadcrumbCurrent').textContent = breadcrumbs[tc];
+}
+
+function runProductSearch() {
+  state.productKeyword = document.getElementById('productSearch').value.trim().toLowerCase();
+  state.currentPage = 1;
+  applyFilters();
+}
+
+// =====================================================================
+// APPLY FILTERS (master function)
+// =====================================================================
+function applyFilters() {
+  const branches = getSelectedBranches();
+  const dateFrom = document.getElementById('dateFrom').value;
+  const dateTo   = document.getElementById('dateTo').value;
+  const kw = state.productKeyword;
+
+  updateDateRangeDisplay(dateFrom, dateTo);
+
+  switch (state.tieu_chi) {
+    case 'ban_hang': {
+      state.filteredData = BAN_HANG_RAW.filter(r =>
+        branches.includes(r.branch) &&
+        (!dateFrom || r.date >= dateFrom) &&
+        (!dateTo   || r.date <= dateTo) &&
+        (!kw || r.ma.toLowerCase().includes(kw) || r.ten.toLowerCase().includes(kw))
+      );
+      renderBanHang();
+      break;
+    }
+    case 'doanh_thu': {
+      const raw = DOANH_THU_RAW.filter(r =>
+        branches.includes(r.branch) &&
+        (!dateFrom || r.date >= dateFrom) &&
+        (!dateTo   || r.date <= dateTo)
+      );
+      const byDate = {};
+      raw.forEach(r => {
+        if (!byDate[r.date]) byDate[r.date] = {date:r.date,sl_don_ban:0,vat:0,doanh_thu:0,sl_don_tra:0,gia_tri_tra:0,thuc_thu:0};
+        byDate[r.date].sl_don_ban += r.sl_don_ban;
+        byDate[r.date].vat        += r.vat;
+        byDate[r.date].doanh_thu  += r.doanh_thu;
+        byDate[r.date].sl_don_tra += r.sl_don_tra;
+        byDate[r.date].gia_tri_tra+= r.gia_tri_tra;
+        byDate[r.date].thuc_thu   += r.thuc_thu;
+      });
+      state.filteredData = Object.values(byDate).sort((a,b) => a.date.localeCompare(b.date));
+      renderDoanhThu();
+      break;
+    }
+    case 'thuoc_ks': {
+      state.filteredData = THUOC_KS_DATA.filter(r =>
+        branches.includes(r.branch) &&
+        (!dateFrom || r.date >= dateFrom) &&
+        (!dateTo   || r.date <= dateTo) &&
+        (!kw || r.ma.toLowerCase().includes(kw) || r.ten.toLowerCase().includes(kw))
+      );
+      renderThuocKS();
+      break;
+    }
+    case 'nhap_hang': {
+      state.filteredData = NHAP_HANG_DATA.filter(r =>
+        branches.includes(r.branch) &&
+        (!dateFrom || r.date >= dateFrom) &&
+        (!dateTo   || r.date <= dateTo) &&
+        (!kw || r.ma_ncc.toLowerCase().includes(kw) || r.ten_ncc.toLowerCase().includes(kw))
+      );
+      renderNhapHang();
+      break;
+    }
+  }
+}
+
+// =====================================================================
+// HELPERS
+// =====================================================================
+function fmt(n) { return (n||0).toLocaleString('vi-VN', {minimumFractionDigits:2,maximumFractionDigits:2}); }
+function fmtDate(s) { if (!s) return ''; const [y,m,d]=s.split('-'); return `${d}/${m}/${y}`; }
+function hsdClass(hsd) {
+  if (!hsd) return '';
+  const now = new Date(); const h = new Date(hsd);
+  const diff = (h - now) / 86400000;
+  if (diff < 0) return 'hsd-exp';
+  if (diff < 90) return 'hsd-warn';
+  return 'hsd-ok';
+}
+function updateDateRangeDisplay(from, to) {
+  const el = document.getElementById('reportDateRange');
+  if (from && to) el.textContent = `Từ ngày ${fmtDate(from)} 00:00 Đến ngày ${fmtDate(to)} 23:59`;
+  else el.textContent = '';
+}
+
+// =====================================================================
+// RENDER: BAN HANG
+// =====================================================================
+function renderBanHang() {
+  const { currentPage, pageSize, filteredData } = state;
+  const start = (currentPage-1)*pageSize;
+  const rows  = filteredData.slice(start, start+pageSize);
+
+  const thead = `<thead><tr>
+    <th style="width:40px">STT</th>
+    <th>Mã SP</th>
+    <th>Tên sản phẩm</th>
+    <th>Số lô</th>
+    <th>Hạn sử dụng</th>
+    <th class="num-col">SL bán</th>
+    <th class="num-col">Tổng tiền</th>
+    <th class="num-col">Tổng thuế</th>
+    <th class="num-col">Tổng giảm giá</th>
+    <th class="num-col">Tổng phải trả</th>
+    <th style="width:88px">Hành động</th>
+  </tr></thead>`;
+
+  const tbody = rows.length ? rows.map((r, i) => `
+  <tr>
+    <td>${start+i+1}</td>
+    <td>${r.ma}</td>
+    <td><span class="product-name">${r.ten}</span> <span style="color:#888;font-size:12px">(${r.donvi})</span></td>
+    <td><span class="lot-badge">${r.lo}</span></td>
+    <td><span class="lot-badge ${hsdClass(r.hsd)}">${fmtDate(r.hsd)}</span></td>
+    <td class="num-col">${r.sl}</td>
+    <td class="num-col currency">${fmt(r.tong_tien)}</td>
+    <td class="num-col">${fmt(r.thue)}</td>
+    <td class="num-col">${fmt(r.giam_gia)}</td>
+    <td class="num-col currency">${fmt(r.phai_tra)}</td>
+    <td><button class="btn-detail" onclick="showDetailBH(${start+i})">👁 Chi tiết</button></td>
+  </tr>`).join('') : '<tr><td colspan="11" class="empty-state">Không có dữ liệu</td></tr>';
+
+  const tsl = filteredData.reduce((s,r)=>s+r.sl,0);
+  const ttt = filteredData.reduce((s,r)=>s+r.tong_tien,0);
+  const tth = filteredData.reduce((s,r)=>s+r.thue,0);
+  const tgg = filteredData.reduce((s,r)=>s+r.giam_gia,0);
+  const tpt = filteredData.reduce((s,r)=>s+r.phai_tra,0);
+
+  const tfoot = `<tfoot><tr class="tfoot-row">
+    <td colspan="5" style="text-align:right;font-weight:700;padding-right:16px">Tổng</td>
+    <td class="num-col">${tsl}</td>
+    <td class="num-col currency">${fmt(ttt)}</td>
+    <td class="num-col">${fmt(tth)}</td>
+    <td class="num-col">${fmt(tgg)}</td>
+    <td class="num-col currency">${fmt(tpt)}</td>
+    <td></td>
+  </tr></tfoot>`;
+
+  document.getElementById('tableWrapper').innerHTML =
+    `<table>${thead}<tbody>${tbody}</tbody>${tfoot}</table>`;
+  renderPagination();
+}
+
+function showDetailBH(idx) {
+  const r = state.filteredData[idx];
+  if (!r) return;
+  alert(`Chi tiết:\nMã SP: ${r.ma}\nTên: ${r.ten} (${r.donvi})\nSố lô: ${r.lo}\nHSD: ${fmtDate(r.hsd)}\nSL bán: ${r.sl}\nTổng tiền: ${fmt(r.tong_tien)} đ\nPhải trả: ${fmt(r.phai_tra)} đ\nChi nhánh: ${BRANCH_NAMES[r.branch]}`);
+}
+
+// =====================================================================
+// RENDER: DOANH THU
+// =====================================================================
+function renderDoanhThu() {
+  const { currentPage, pageSize, filteredData } = state;
+  const start = (currentPage-1)*pageSize;
+  const rows  = filteredData.slice(start, start+pageSize);
+
+  const thead = `<thead><tr>
+    <th style="width:40px">STT</th>
+    <th>Thời gian</th>
+    <th class="num-col">SL đơn bán</th>
+    <th class="num-col">VAT</th>
+    <th class="num-col">Doanh thu</th>
+    <th class="num-col">SL đơn trả</th>
+    <th class="num-col">Giá trị trả</th>
+    <th class="num-col">Thực thu</th>
+    <th style="width:88px">Hành động</th>
+  </tr></thead>`;
+
+  const tbody = rows.length ? rows.map((r, i) => `
+  <tr>
+    <td>${start+i+1}</td>
+    <td>${fmtDate(r.date)}</td>
+    <td class="num-col">${r.sl_don_ban}</td>
+    <td class="num-col">${fmt(r.vat)}</td>
+    <td class="num-col currency">${fmt(r.doanh_thu)}</td>
+    <td class="num-col">${r.sl_don_tra}</td>
+    <td class="num-col" style="color:#c62828">${fmt(r.gia_tri_tra)}</td>
+    <td class="num-col currency" style="font-weight:600">${fmt(r.thuc_thu)}</td>
+    <td><button class="btn-detail" onclick="showDetailDT(${start+i})">👁 Chi tiết</button></td>
+  </tr>`).join('') : '<tr><td colspan="9" class="empty-state">Không có dữ liệu</td></tr>';
+
+  const tsb = filteredData.reduce((s,r)=>s+r.sl_don_ban,0);
+  const tvat= filteredData.reduce((s,r)=>s+r.vat,0);
+  const tdt = filteredData.reduce((s,r)=>s+r.doanh_thu,0);
+  const ttr = filteredData.reduce((s,r)=>s+r.sl_don_tra,0);
+  const tgt = filteredData.reduce((s,r)=>s+r.gia_tri_tra,0);
+  const tth = filteredData.reduce((s,r)=>s+r.thuc_thu,0);
+
+  const tfoot = `<tfoot><tr class="tfoot-row">
+    <td colspan="2" style="text-align:right;font-weight:700;padding-right:16px">Tổng</td>
+    <td class="num-col">${tsb}</td>
+    <td class="num-col">${fmt(tvat)}</td>
+    <td class="num-col currency">${fmt(tdt)}</td>
+    <td class="num-col">${ttr}</td>
+    <td class="num-col" style="color:#c62828">${fmt(tgt)}</td>
+    <td class="num-col currency" style="font-weight:700">${fmt(tth)}</td>
+    <td></td>
+  </tr></tfoot>`;
+
+  document.getElementById('tableWrapper').innerHTML =
+    `<table>${thead}<tbody>${tbody}</tbody>${tfoot}</table>`;
+  renderPagination();
+}
+
+function showDetailDT(idx) {
+  const r = state.filteredData[idx];
+  if (!r) return;
+  alert(`Chi tiết ngày ${fmtDate(r.date)}:\nSL đơn bán: ${r.sl_don_ban}\nVAT: ${fmt(r.vat)} đ\nDoanh thu: ${fmt(r.doanh_thu)} đ\nSL đơn trả: ${r.sl_don_tra}\nGiá trị trả: ${fmt(r.gia_tri_tra)} đ\nThực thu: ${fmt(r.thuc_thu)} đ`);
+}
+
+// =====================================================================
+// RENDER: THUỐC KIỂM SOÁT ĐẶC BIỆT
+// =====================================================================
+function renderThuocKS() {
+  const { currentPage, pageSize, filteredData } = state;
+  const start = (currentPage-1)*pageSize;
+  const rows  = filteredData.slice(start, start+pageSize);
+
+  const thead = `<thead><tr>
+    <th style="width:40px">STT</th>
+    <th>Mã</th>
+    <th>Tên thuốc</th>
+    <th>Đơn vị</th>
+    <th>Số lô</th>
+    <th>HSD</th>
+    <th class="num-col">Số lượng</th>
+    <th>Thời gian</th>
+    <th>Ghi chú</th>
+  </tr></thead>`;
+
+  const tbody = rows.length ? rows.map((r, i) => `
+  <tr>
+    <td>${start+i+1}</td>
+    <td><span style="color:#1a73e8;font-weight:500">${r.ma}</span></td>
+    <td><span class="product-name">${r.ten}</span></td>
+    <td>${r.don_vi}</td>
+    <td><span class="lot-badge">${r.lo}</span></td>
+    <td><span class="lot-badge ${hsdClass(r.hsd)}">${fmtDate(r.hsd)}</span></td>
+    <td class="num-col">${r.sl}</td>
+    <td>${r.thoi_gian}</td>
+    <td style="color:#546e7a;max-width:200px;overflow:hidden;text-overflow:ellipsis">${r.ghi_chu||'—'}</td>
+  </tr>`).join('') : '<tr><td colspan="9" class="empty-state">Không có dữ liệu</td></tr>';
+
+  const tsl = filteredData.reduce((s,r)=>s+r.sl,0);
+  const tfoot = `<tfoot><tr class="tfoot-row">
+    <td colspan="6" style="text-align:right;font-weight:700;padding-right:16px">Tổng</td>
+    <td class="num-col">${tsl}</td>
+    <td colspan="2"></td>
+  </tr></tfoot>`;
+
+  document.getElementById('tableWrapper').innerHTML =
+    `<table>${thead}<tbody>${tbody}</tbody>${tfoot}</table>`;
+  renderPagination();
+}
+
+// =====================================================================
+// RENDER: NHẬP HÀNG NCC
+// =====================================================================
+function renderNhapHang() {
+  const { currentPage, pageSize, filteredData } = state;
+  const start = (currentPage-1)*pageSize;
+  const rows  = filteredData.slice(start, start+pageSize);
+
+  const thead = `<thead>
+    <tr>
+      <th rowspan="2" style="width:36px;vertical-align:bottom">STT</th>
+      <th rowspan="2" style="vertical-align:bottom">Mã NCC</th>
+      <th rowspan="2" style="vertical-align:bottom;min-width:200px">Tên NCC</th>
+      <th colspan="5" class="th-group">Nhập hàng</th>
+      <th colspan="5" class="th-group" style="background:#fce4ec!important;color:#c62828!important;border-color:#f8bbd0!important">Trả hàng</th>
+      <th rowspan="2" class="num-col" style="vertical-align:bottom">Tổng tiền</th>
+      <th rowspan="2" style="width:88px;vertical-align:bottom">Hành động</th>
+    </tr>
+    <tr>
+      <th class="num-col th-sub">SL nhập</th>
+      <th class="num-col th-sub">Tổng tiền</th>
+      <th class="num-col th-sub">Giảm giá</th>
+      <th class="num-col th-sub">VAT</th>
+      <th class="num-col th-sub">Giá trị nhập</th>
+      <th class="num-col th-sub" style="background:#fce4ec">SL trả</th>
+      <th class="num-col th-sub" style="background:#fce4ec">Tổng tiền</th>
+      <th class="num-col th-sub" style="background:#fce4ec">Giảm giá</th>
+      <th class="num-col th-sub" style="background:#fce4ec">VAT</th>
+      <th class="num-col th-sub" style="background:#fce4ec">Giá trị trả</th>
+    </tr>
+  </thead>`;
+
+  const tbody = rows.length ? rows.map((r, i) => `
+  <tr>
+    <td>${start+i+1}</td>
+    <td><span style="color:#1a73e8;font-weight:500">${r.ma_ncc}</span></td>
+    <td>${r.ten_ncc}</td>
+    <td class="num-col">${r.sl_nhap}</td>
+    <td class="num-col currency">${fmt(r.tong_tien_nhap)}</td>
+    <td class="num-col" style="color:#e65100">${fmt(r.giam_gia_nhap)}</td>
+    <td class="num-col">${fmt(r.vat_nhap)}</td>
+    <td class="num-col currency" style="font-weight:600">${fmt(r.gia_tri_nhap)}</td>
+    <td class="num-col" style="color:#c62828">${r.sl_tra||0}</td>
+    <td class="num-col" style="color:#c62828">${fmt(r.tong_tien_tra)}</td>
+    <td class="num-col" style="color:#c62828">${fmt(r.giam_gia_tra)}</td>
+    <td class="num-col" style="color:#c62828">${fmt(r.vat_tra)}</td>
+    <td class="num-col" style="color:#c62828;font-weight:600">${fmt(r.gia_tri_tra)}</td>
+    <td class="num-col currency" style="font-weight:700">${fmt(r.tong_tien_net)}</td>
+    <td><button class="btn-detail" onclick="showDetailNCC(${start+i})">👁 Chi tiết</button></td>
+  </tr>`).join('') : '<tr><td colspan="15" class="empty-state">Không có dữ liệu</td></tr>';
+
+  const tNhap   = filteredData.reduce((s,r)=>s+r.sl_nhap,0);
+  const tTienN  = filteredData.reduce((s,r)=>s+r.tong_tien_nhap,0);
+  const tGiamN  = filteredData.reduce((s,r)=>s+r.giam_gia_nhap,0);
+  const tVatN   = filteredData.reduce((s,r)=>s+r.vat_nhap,0);
+  const tGtN    = filteredData.reduce((s,r)=>s+r.gia_tri_nhap,0);
+  const tTra    = filteredData.reduce((s,r)=>s+r.sl_tra,0);
+  const tTienT  = filteredData.reduce((s,r)=>s+r.tong_tien_tra,0);
+  const tGiamT  = filteredData.reduce((s,r)=>s+r.giam_gia_tra,0);
+  const tVatT   = filteredData.reduce((s,r)=>s+r.vat_tra,0);
+  const tGtT    = filteredData.reduce((s,r)=>s+r.gia_tri_tra,0);
+  const tNet    = filteredData.reduce((s,r)=>s+r.tong_tien_net,0);
+
+  const tfoot = `<tfoot><tr class="tfoot-row">
+    <td colspan="3" style="text-align:right;font-weight:700;padding-right:16px">Tổng</td>
+    <td class="num-col">${tNhap}</td>
+    <td class="num-col currency">${fmt(tTienN)}</td>
+    <td class="num-col">${fmt(tGiamN)}</td>
+    <td class="num-col">${fmt(tVatN)}</td>
+    <td class="num-col currency">${fmt(tGtN)}</td>
+    <td class="num-col">${tTra}</td>
+    <td class="num-col">${fmt(tTienT)}</td>
+    <td class="num-col">${fmt(tGiamT)}</td>
+    <td class="num-col">${fmt(tVatT)}</td>
+    <td class="num-col">${fmt(tGtT)}</td>
+    <td class="num-col currency" style="font-weight:700">${fmt(tNet)}</td>
+    <td></td>
+  </tr></tfoot>`;
+
+  document.getElementById('tableWrapper').innerHTML =
+    `<table>${thead}<tbody>${tbody}</tbody>${tfoot}</table>`;
+  renderPagination();
+}
+
+function showDetailNCC(idx) {
+  const r = state.filteredData[idx];
+  if (!r) return;
+  alert(`Chi tiết NCC:\nMã: ${r.ma_ncc}\nTên: ${r.ten_ncc}\nNgày: ${fmtDate(r.date)}\nSL nhập: ${r.sl_nhap}\nGiá trị nhập: ${fmt(r.gia_tri_nhap)} đ\nSL trả: ${r.sl_tra}\nGiá trị trả: ${fmt(r.gia_tri_tra)} đ\nTổng tiền: ${fmt(r.tong_tien_net)} đ`);
+}
+
+// =====================================================================
+// PAGINATION
+// =====================================================================
+function renderPagination() {
+  const { currentPage, pageSize, filteredData } = state;
+  const total = filteredData.length;
+  const totalPages = Math.max(1, Math.ceil(total/pageSize));
+  const s = (currentPage-1)*pageSize + 1;
+  const e = Math.min(currentPage*pageSize, total);
+
+  document.getElementById('pageInfo').textContent =
+    total ? `Hiển thị ${s} - ${e} trên ${total}` : 'Không có dữ liệu';
+
+  const btns = document.getElementById('pageBtns');
+  btns.innerHTML = '';
+  const add = (label, page, disabled, active) => {
+    const b = document.createElement('button');
+    b.className = 'page-btn' + (active?' active':'');
+    b.textContent = label;
+    b.disabled = disabled;
+    if (!disabled && !active) b.onclick = () => goPage(page);
+    btns.appendChild(b);
+  };
+  add('«', 1, currentPage===1);
+  add('‹', currentPage-1, currentPage===1);
+  let pages = totalPages<=7 ? Array.from({length:totalPages},(_,i)=>i+1) : (() => {
+    const p=[1];
+    if (currentPage>3) p.push('…');
+    for (let i=Math.max(2,currentPage-1); i<=Math.min(totalPages-1,currentPage+1); i++) p.push(i);
+    if (currentPage<totalPages-2) p.push('…');
+    p.push(totalPages); return p;
+  })();
+  pages.forEach(p => {
+    if (p==='…') { const s=document.createElement('span'); s.textContent='…'; s.style.cssText='padding:0 4px;line-height:28px'; btns.appendChild(s); }
+    else add(p, p, false, p===currentPage);
+  });
+  add('›', currentPage+1, currentPage===totalPages);
+  add('»', totalPages, currentPage===totalPages);
+}
+function goPage(p) { state.currentPage=p; applyFilters(); }
+function changePageSize() {
+  state.pageSize = parseInt(document.getElementById('pageSizeSelect').value);
+  state.currentPage = 1;
+  applyFilters();
+}
+
+// =====================================================================
+// EXPORT CSV
+// =====================================================================
+function exportCSV() {
+  const tc = state.tieu_chi;
+  let headers, rows;
+  if (tc==='ban_hang') {
+    headers=['STT','Mã SP','Tên','ĐV','Số lô','HSD','SL bán','Tổng tiền','Thuế','Giảm giá','Phải trả'];
+    rows=state.filteredData.map((r,i)=>[i+1,r.ma,r.ten,r.donvi,r.lo,fmtDate(r.hsd),r.sl,r.tong_tien,r.thue,r.giam_gia,r.phai_tra]);
+  } else if (tc==='doanh_thu') {
+    headers=['STT','Thời gian','SL đơn bán','VAT','Doanh thu','SL đơn trả','Giá trị trả','Thực thu'];
+    rows=state.filteredData.map((r,i)=>[i+1,fmtDate(r.date),r.sl_don_ban,r.vat,r.doanh_thu,r.sl_don_tra,r.gia_tri_tra,r.thuc_thu]);
+  } else if (tc==='thuoc_ks') {
+    headers=['STT','Mã','Tên thuốc','ĐV','Lô','HSD','SL','Thời gian','Ghi chú'];
+    rows=state.filteredData.map((r,i)=>[i+1,r.ma,r.ten,r.don_vi,r.lo,fmtDate(r.hsd),r.sl,r.thoi_gian,r.ghi_chu]);
+  } else {
+    headers=['STT','Mã NCC','Tên NCC','SL nhập','Tổng tiền nhập','Giảm giá nhập','VAT nhập','Giá trị nhập','SL trả','Tổng tiền trả','Giảm giá trả','VAT trả','Giá trị trả','Tổng tiền'];
+    rows=state.filteredData.map((r,i)=>[i+1,r.ma_ncc,r.ten_ncc,r.sl_nhap,r.tong_tien_nhap,r.giam_gia_nhap,r.vat_nhap,r.gia_tri_nhap,r.sl_tra,r.tong_tien_tra,r.giam_gia_tra,r.vat_tra,r.gia_tri_tra,r.tong_tien_net]);
+  }
+  const csv = [headers,...rows].map(r=>r.map(c=>`"${c??''}"`).join(',')).join('\n');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8;'}));
+  a.download=`bao-cao-${tc}-${Date.now()}.csv`;
+  a.click();
+}
+</script>
+</body>
+</html>
