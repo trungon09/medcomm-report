@@ -181,6 +181,144 @@ tbody tr:hover{background:#f8f9ff}
 .empty-state{padding:40px;text-align:center;color:#aaa;font-size:14px}
 .site-footer{background:#fff;text-align:center;padding:10px;font-size:11.5px;color:#aaa;border-top:1px solid #e8e8e8}
 
+/* ── NAV DROPDOWN ── */
+.menubar{overflow:visible!important;z-index:300;position:relative}
+.nav-item{position:relative;display:inline-block}
+.nav-item>a{cursor:pointer}
+.nav-dd{display:none;position:absolute;top:100%;left:0;background:#fff;border:1px solid #e0e0e0;border-radius:6px;box-shadow:0 6px 20px rgba(0,0,0,.14);z-index:400;min-width:190px;padding:4px 0;margin-top:1px}
+.nav-item:hover .nav-dd{display:block}
+.nav-dd-item{display:block;padding:8px 16px;font-size:12.5px;color:#333;cursor:pointer;white-space:nowrap;transition:background .1s;text-decoration:none}
+.nav-dd-item:hover{background:#e8f0fe;color:#1a73e8}
+.nav-dd-sep{height:1px;background:#f0f0f0;margin:3px 0}
+
+/* ── PAGE SCREENS ── */
+.page-screen{display:none;min-height:calc(100vh - 84px)}
+.page-screen.active{display:block}
+#screen-report{display:flex;min-height:calc(100vh - 84px)}
+#screen-report.hidden{display:none}
+
+/* ── SHARED SCREEN LAYOUT ── */
+.screen-with-sidebar{display:flex;min-height:calc(100vh - 84px)}
+.screen-sidebar{width:210px;min-width:210px;background:#1a2744;color:#fff;padding:12px 10px;display:flex;flex-direction:column;gap:10px;overflow-y:auto}
+.screen-sidebar .sec-title{background:#253454;color:#90b4d4;font-size:11px;font-weight:700;padding:5px 10px;border-radius:4px;text-transform:uppercase;letter-spacing:.5px}
+.screen-sidebar input,.screen-sidebar select{width:100%;background:#253454;border:1px solid #3a5070;color:#c8d8ea;border-radius:4px;padding:5px 8px;font-size:12px;margin-bottom:4px}
+.screen-sidebar input::placeholder{color:#5d7a9a}
+.screen-sidebar select option{background:#1e2e4a}
+.screen-sidebar label{display:flex;align-items:center;gap:7px;color:#c8d8ea;font-size:12px;padding:3px 2px;cursor:pointer}
+.screen-sidebar label input[type=checkbox]{width:auto;margin:0;accent-color:#42a5f5}
+.screen-main{flex:1;padding:14px;overflow:auto;min-width:0}
+
+/* ── PAGE HEADER ── */
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+.page-title{font-size:18px;font-weight:700;color:#1a2744;text-transform:uppercase;letter-spacing:.3px}
+.page-actions{display:flex;gap:8px;align-items:center}
+.btn-primary{background:#1565c0;color:#fff;border:none;border-radius:5px;padding:7px 14px;font-size:12.5px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:background .15s}
+.btn-primary:hover{background:#1976d2}
+.btn-success{background:#2e7d32;color:#fff;border:none;border-radius:5px;padding:7px 14px;font-size:12.5px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:background .15s}
+.btn-success:hover{background:#388e3c}
+.btn-outline{background:#fff;border:1.5px solid #b0bec5;color:#546e7a;border-radius:5px;padding:7px 14px;font-size:12.5px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:all .15s}
+.btn-outline:hover{background:#eceff1}
+.btn-danger{background:#c62828;color:#fff;border:none;border-radius:5px;padding:7px 14px;font-size:12.5px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:background .15s}
+.content-card{background:#fff;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.08);overflow:hidden}
+
+/* ── NCC STATS ── */
+.ncc-stats{display:flex;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.ncc-stat{flex:1;min-width:200px;background:#fff;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.08);padding:16px 20px}
+.ncc-stat .ns-label{font-size:11.5px;color:#78909c;font-weight:500;text-transform:uppercase;letter-spacing:.3px;margin-bottom:6px}
+.ncc-stat .ns-value{font-size:22px;font-weight:700;color:#1565c0}
+
+/* ── STEPPER ── */
+.stepper-wrap{display:flex;align-items:flex-start;margin:20px 0 28px;padding:0 20px}
+.step-item{flex:1;display:flex;flex-direction:column;align-items:center;position:relative}
+.step-item:not(:last-child)::after{content:'';position:absolute;top:15px;left:50%;width:100%;height:2px;background:#e0e0e0;z-index:0;transition:background .3s}
+.step-item.done::after,.step-item.active::after{background:#1565c0}
+.step-circle{width:32px;height:32px;border-radius:50%;border:2px solid #e0e0e0;background:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#bbb;position:relative;z-index:1;transition:all .25s}
+.step-item.active .step-circle{border-color:#1565c0;background:#1565c0;color:#fff}
+.step-item.done .step-circle{border-color:#1565c0;background:#1565c0;color:#fff}
+.step-lbl{font-size:11px;color:#aaa;margin-top:6px;text-align:center;font-weight:500;white-space:nowrap}
+.step-item.active .step-lbl{color:#1565c0;font-weight:700}
+.step-item.done .step-lbl{color:#1565c0}
+.step-body{background:#f8f9ff;border-radius:8px;padding:20px;min-height:200px}
+
+/* ── PROVIDER SELECTOR ── */
+.provider-select-row{display:flex;gap:12px;margin-bottom:18px}
+.provider-card{flex:1;border:2px solid #e0e0e0;border-radius:8px;padding:16px;text-align:center;cursor:pointer;transition:all .15s}
+.provider-card:hover,.provider-card.sel{border-color:#1565c0;background:#e3f2fd}
+.provider-card .pc-icon{font-size:28px;margin-bottom:6px}
+.provider-card .pc-name{font-weight:700;font-size:14px;color:#1a2744}
+.provider-card .pc-sub{font-size:11.5px;color:#78909c;margin-top:2px}
+
+/* ── DIALOG TABS ── */
+.dtab-bar{display:flex;border-bottom:2px solid #e8ecf0;margin-bottom:14px;flex-wrap:wrap}
+.dtab-btn{background:none;border:none;border-bottom:3px solid transparent;padding:8px 14px;font-size:12.5px;cursor:pointer;color:#78909c;font-weight:500;margin-bottom:-2px;transition:all .15s;white-space:nowrap}
+.dtab-btn:hover{color:#1a73e8;background:#f5f9ff}
+.dtab-btn.active{color:#1565c0;border-bottom-color:#1565c0;font-weight:700}
+.dtab-content{display:none}
+.dtab-content.active{display:block}
+.form-row{display:flex;gap:16px;margin-bottom:12px;flex-wrap:wrap}
+.form-group{display:flex;flex-direction:column;gap:4px;flex:1;min-width:160px}
+.form-group label{font-size:11px;color:#78909c;font-weight:600;text-transform:uppercase;letter-spacing:.2px}
+.form-control{border:1px solid #cdd5e0;border-radius:4px;padding:7px 10px;font-size:12.5px;color:#333;background:#fff;width:100%}
+.form-control:focus{outline:none;border-color:#1565c0}
+.badge-ncc-link{background:#e3f2fd;color:#1565c0;border-radius:3px;padding:1px 7px;font-size:10.5px;font-weight:600;margin-left:4px}
+
+/* ── RECEIPT / NEW RECEIPT ── */
+.receipt-filter-bar{background:#fff;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.08);padding:12px 14px;margin-bottom:12px;display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+.rf-grp{display:flex;flex-direction:column;gap:3px}
+.rf-lbl{font-size:10.5px;color:#78909c;font-weight:600;text-transform:uppercase}
+.rf-input{border:1px solid #cdd5e0;border-radius:4px;padding:5px 9px;font-size:12px;color:#333;background:#fff;min-width:120px}
+
+/* NEW RECEIPT SCREEN */
+.nr-layout{display:flex;min-height:calc(100vh - 130px);background:#fff;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.08);overflow:hidden}
+.nr-left{flex:1;padding:16px;border-right:1px solid #f0f0f0;overflow:auto}
+.nr-right{width:280px;padding:16px;background:#fafbfc;flex-shrink:0}
+.nr-title{font-size:17px;font-weight:700;color:#1a2744;text-transform:uppercase;margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid #e8ecf0}
+.nr-search-wrap{position:relative;margin-bottom:10px}
+.nr-search{width:100%;border:1.5px solid #1565c0;border-radius:4px;padding:8px 38px 8px 12px;font-size:13px;outline:none;transition:box-shadow .15s}
+.nr-search:focus{box-shadow:0 0 0 3px rgba(21,101,192,.15)}
+.nr-sugg-list{position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid #e0e0e0;border-radius:0 0 6px 6px;z-index:200;box-shadow:0 6px 16px rgba(0,0,0,.1);max-height:260px;overflow-y:auto}
+.nr-sugg-item{padding:9px 12px;cursor:pointer;border-bottom:1px solid #f5f5f5;transition:background .1s;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.nr-sugg-item:last-child{border-bottom:none}
+.nr-sugg-item:hover{background:#e8f0fe}
+.nr-sugg-name{font-size:12.5px;font-weight:500;color:#1a2744}
+.nr-sugg-tag{font-size:10.5px;color:#1565c0;background:#e3f2fd;border-radius:3px;padding:1px 6px;white-space:nowrap}
+.nr-table{width:100%;border-collapse:collapse;font-size:12.5px}
+.nr-table th{padding:8px 10px;background:#f5f7fa;text-align:left;font-size:11px;font-weight:600;color:#546e7a;border-bottom:2px solid #e8ecf0;white-space:nowrap;text-transform:uppercase}
+.nr-table td{padding:7px 10px;border-bottom:1px solid #f0f3f6;vertical-align:middle}
+.nr-table tbody tr:hover{background:#f8f9ff}
+.nr-qty-input,.nr-price-input{border:1px solid #cdd5e0;border-radius:3px;padding:3px 7px;font-size:12px;text-align:right;width:80px}
+.nr-qty-input:focus,.nr-price-input:focus{outline:none;border-color:#1565c0}
+.nr-price-input{width:110px}
+.btn-del-row{background:none;border:none;color:#c62828;cursor:pointer;font-size:18px;line-height:1;padding:0 4px}
+.nr-field-lbl{font-size:11px;color:#78909c;font-weight:600;text-transform:uppercase;margin-bottom:3px;margin-top:10px}
+.nr-field{width:100%;border:1px solid #cdd5e0;border-radius:4px;padding:6px 9px;font-size:12.5px;margin-bottom:0}
+.nr-field:focus{outline:none;border-color:#1565c0}
+.nr-total-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:2px solid #e8ecf0;margin-top:12px}
+.nr-total-lbl{font-size:13px;color:#78909c;font-weight:600}
+.nr-total-val{font-size:20px;font-weight:700;color:#1565c0}
+.nr-status-badge{display:inline-flex;align-items:center;gap:4px;border-radius:12px;padding:3px 10px;font-size:11px;font-weight:600}
+.nr-s-ordered{background:#fff3e0;color:#e65100}
+.nr-s-done{background:#e8f5e9;color:#2e7d32}
+
+/* ── PARTNER SEARCH IN DIALOG ── */
+.partner-sp-wrap{position:relative}
+.partner-sp-list{position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid #e0e0e0;border-radius:0 0 6px 6px;z-index:600;box-shadow:0 4px 12px rgba(0,0,0,.12);max-height:200px;overflow-y:auto}
+.partner-sp-item{padding:8px 12px;cursor:pointer;font-size:12.5px;border-bottom:1px solid #f5f5f5;transition:background .1s}
+.partner-sp-item:hover{background:#e8f0fe}
+.partner-sp-info{background:#f8f9ff;border-radius:6px;padding:12px;margin-top:10px;border:1px solid #e3f2fd}
+.partner-sp-info .sp-name{font-weight:700;color:#1a2744;font-size:13px}
+.partner-sp-info .sp-meta{font-size:11.5px;color:#546e7a;margin-top:4px}
+
+/* ── PRODUCT DETAIL DIALOG (Cài đặt) ── */
+.pd-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.pd-form-full{grid-column:1/-1}
+.pd-img-row{display:flex;gap:8px;margin-bottom:12px}
+.pd-img-slot{width:72px;height:72px;border:2px dashed #cdd5e0;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#bbb;font-size:22px;cursor:pointer;transition:border-color .15s}
+.pd-img-slot:hover{border-color:#1565c0;color:#1565c0}
+.pd-unit-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:8px}
+.pd-unit-table th{padding:6px 8px;background:#f5f7fa;font-size:11px;font-weight:600;color:#546e7a;text-align:left;border-bottom:2px solid #e8ecf0}
+.pd-unit-table td{padding:6px 8px;border-bottom:1px solid #f0f3f6;vertical-align:middle}
+
 @media print{.sidebar,.topbar,.menubar,.report-actions,.pagination-bar,.site-footer,.cards-row{display:none!important}.main{padding:0}.report-card{box-shadow:none}}
 </style>
 </head>
@@ -203,21 +341,59 @@ tbody tr:hover{background:#f8f9ff}
 </div>
 
 <!-- MENUBAR -->
-<div class="menubar">
-  <a href="#">🏠 Tổng quan</a>
-  <a href="#">📦 Sản phẩm ▾</a>
-  <a href="#">💰 Giao dịch ▾</a>
-  <a href="#">🤝 Đối tác ▾</a>
-  <a href="#">🏪 Kho ▾</a>
+<div class="menubar" id="menubar">
+  <a href="#" onclick="showPage('report');return false" id="nav-report">🏠 Tổng quan</a>
+
+  <div class="nav-item">
+    <a href="#" id="nav-sp" onclick="return false">📦 Sản phẩm ▾</a>
+    <div class="nav-dd">
+      <div class="nav-dd-item" onclick="showPage('products')">Danh sách sản phẩm</div>
+      <div class="nav-dd-item">Nhóm sản phẩm</div>
+      <div class="nav-dd-item">Thiết lập giá</div>
+      <div class="nav-dd-item">Công thức giá</div>
+    </div>
+  </div>
+
+  <div class="nav-item">
+    <a href="#" id="nav-gd" onclick="return false">💰 Giao dịch ▾</a>
+    <div class="nav-dd">
+      <div class="nav-dd-item" onclick="showPage('receipts')">Nhập hàng từ NCC</div>
+      <div class="nav-dd-item">Trả hàng NCC</div>
+      <div class="nav-dd-item">Nhập tồn kho</div>
+    </div>
+  </div>
+
+  <div class="nav-item">
+    <a href="#" id="nav-dt" onclick="return false">🤝 Đối tác ▾</a>
+    <div class="nav-dd">
+      <div class="nav-dd-item">Quản lý khách hàng</div>
+      <div class="nav-dd-item" onclick="showPage('ncc')">Quản lý nhà cung cấp</div>
+      <div class="nav-dd-item">Quản lý bác sĩ</div>
+    </div>
+  </div>
+
+  <div class="nav-item">
+    <a href="#" onclick="return false">🏪 Kho ▾</a>
+    <div class="nav-dd">
+      <div class="nav-dd-item">Kiểm kê kho</div>
+      <div class="nav-dd-item">Điều chuyển kho</div>
+    </div>
+  </div>
   <a href="#">💵 Sổ quỹ thu chi</a>
-  <a href="#">👥 Nhân viên ▾</a>
-  <a href="#" class="active">📊 Báo cáo ▾</a>
+  <div class="nav-item">
+    <a href="#" onclick="return false">👥 Nhân viên ▾</a>
+    <div class="nav-dd">
+      <div class="nav-dd-item">Danh sách nhân viên</div>
+      <div class="nav-dd-item">Phân quyền</div>
+    </div>
+  </div>
+  <a href="#" onclick="showPage('report');return false" class="active" id="nav-bc">📊 Báo cáo ▾</a>
   <a href="#">🗄 Dữ liệu liên thông ▾</a>
   <a href="#">📈 Số theo dõi ▾</a>
   <a href="#">🏬 Bán hàng</a>
 </div>
 
-<div class="layout">
+<div class="layout" id="screen-report">
 <!-- SIDEBAR -->
 <div class="sidebar">
   <div class="sidebar-search"><span>🔍</span><input type="text" placeholder="Tìm kiếm"></div>
@@ -320,6 +496,388 @@ tbody tr:hover{background:#f8f9ff}
     </div>
   </div>
 </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     NCC MANAGEMENT SCREEN
+═══════════════════════════════════════════════════════ -->
+<div class="page-screen screen-with-sidebar" id="screen-ncc">
+  <!-- NCC sidebar filter -->
+  <div class="screen-sidebar">
+    <div class="sec-title">Nhóm nhà cung cấp</div>
+    <select><option>Chọn nhóm NCC</option><option>Nhóm NCC mặc định</option></select>
+    <div class="sec-title">Tìm theo mã, tên, sdt</div>
+    <input type="text" placeholder="Tìm theo mã, tên, sdt">
+    <div class="sec-title">Tìm theo email</div>
+    <input type="text" placeholder="Email">
+    <div class="sec-title">Người tạo</div>
+    <select><option>Người tạo</option></select>
+    <div class="sec-title" style="cursor:pointer">📅 Ngày tạo</div>
+    <div class="sec-title" style="cursor:pointer">💰 Tổng mua</div>
+    <div class="sec-title" style="cursor:pointer">🔄 Tổng trả</div>
+    <div class="sec-title" style="cursor:pointer">📊 Tổng nợ</div>
+    <div class="sec-title">Trạng thái</div>
+    <select><option>Trạng thái</option><option>Hoạt động</option><option>Ngừng hoạt động</option></select>
+    <div class="sec-title">Tỉnh (thành phố)</div>
+    <select><option>Tỉnh (thành phố)</option></select>
+    <button class="search-btn" style="margin-top:8px">🔍 Tìm kiếm</button>
+  </div>
+
+  <!-- NCC main -->
+  <div class="screen-main">
+    <div class="breadcrumb"><a href="#" onclick="showPage('report');return false">Trang chủ</a> / <span>Quản lý nhà cung cấp</span></div>
+
+    <div class="ncc-stats">
+      <div class="ncc-stat"><div class="ns-label">Tổng nợ NCC</div><div class="ns-value">2.041.769.813</div></div>
+      <div class="ncc-stat"><div class="ns-label">Tổng mua hàng NCC</div><div class="ns-value">243.717.709</div></div>
+      <div class="ncc-stat"><div class="ns-label">Tổng trả hàng NCC</div><div class="ns-value">36.000</div></div>
+    </div>
+
+    <div class="content-card">
+      <div class="report-header">
+        <div><h2 class="page-title">NHÀ CUNG CẤP</h2></div>
+        <div class="page-actions">
+          <button class="btn-primary" onclick="openLinkNCC()">🔗 Liên kết nhà cung cấp</button>
+          <button class="btn-primary">+ Tạo mới</button>
+          <button class="btn-outline">📥 Nhập dữ liệu</button>
+          <button class="btn-outline">🕐 Lịch sử nhập</button>
+          <button class="btn-outline">📤 Xuất dữ liệu</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table id="ncc-table">
+          <thead><tr>
+            <th style="width:40px">STT</th><th>Mã nhà cung cấp</th><th style="min-width:180px">Tên nhà cung cấp</th>
+            <th>Nhóm NCC</th><th>Mã số thuế</th><th>Điện thoại</th>
+            <th class="r">Nợ cần trả hiện tại</th><th>Trạng thái</th><th>Hành động</th>
+          </tr></thead>
+          <tbody id="ncc-tbody"></tbody>
+        </table>
+      </div>
+      <div class="pagination-bar"><span class="page-info" id="ncc-pg-info"></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     PRODUCT LIST SCREEN
+═══════════════════════════════════════════════════════ -->
+<div class="page-screen screen-with-sidebar" id="screen-products">
+  <div class="screen-sidebar">
+    <div class="sec-title">Sản phẩm</div>
+    <input type="text" placeholder="Nhập tên, mã sản phẩm">
+    <div class="sec-title">Loại sản phẩm</div>
+    <label><input type="checkbox" checked> Dược phẩm</label>
+    <label><input type="checkbox" checked> Vật tư</label>
+    <label><input type="checkbox" checked> Sản phẩm khác</label>
+    <div class="sec-title">Nhóm sản phẩm</div>
+    <select><option value="">Chọn nhóm sản phẩm</option><option>Nhóm 1</option><option>Nhóm 2</option></select>
+    <div class="sec-title">Trạng thái</div>
+    <select><option>Hàng đang bán</option><option>Ngừng bán</option><option>Tất cả</option></select>
+    <div class="sec-title">SP Liên thông</div>
+    <label><input type="radio" name="lt" checked> Tất cả</label>
+    <label><input type="radio" name="lt"> Đã liên thông</label>
+    <label><input type="radio" name="lt"> Chưa liên thông</label>
+    <button class="search-btn" style="margin-top:8px">🔍 Tìm kiếm</button>
+  </div>
+
+  <div class="screen-main">
+    <div class="breadcrumb"><a href="#" onclick="showPage('report');return false">Trang chủ</a> / <span>Sản phẩm</span> / <span>Danh sách sản phẩm</span></div>
+    <div class="content-card">
+      <div class="report-header">
+        <div><h2 class="page-title">SẢN PHẨM</h2><div style="color:#2e7d32;font-size:12px;margin-top:2px">✓ Sản phẩm CSDL Dược</div></div>
+        <div class="page-actions">
+          <button class="btn-primary">+ Tạo mới</button>
+          <button class="btn-outline">📥 Nhập dữ liệu</button>
+          <button class="btn-outline">🕐 Lịch sử nhập</button>
+          <button class="btn-outline">📤 Xuất dữ liệu</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table id="prod-list-table">
+          <thead><tr>
+            <th style="width:40px">STT</th><th>Mã sản phẩm</th>
+            <th style="min-width:200px">Tên sản phẩm</th>
+            <th>Đơn vị tính</th><th class="r">Giá bán</th><th class="r">Giá đăng ký</th>
+            <th class="r">Tồn kho</th><th>Trạng thái</th><th>Hành động</th>
+          </tr></thead>
+          <tbody id="prod-list-tbody"></tbody>
+        </table>
+      </div>
+      <div class="pagination-bar">
+        <select class="page-size-sel"><option>10</option><option>20</option><option>50</option></select>
+        <span class="page-info" id="prod-pg-info"></span>
+        <div class="page-btns" id="prod-pg-btns"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     RECEIPT LIST SCREEN
+═══════════════════════════════════════════════════════ -->
+<div class="page-screen screen-with-sidebar" id="screen-receipts">
+  <div class="screen-sidebar">
+    <div class="sec-title">Mã phiếu</div>
+    <input type="text" placeholder="Nhập mã phiếu">
+    <div class="sec-title">Sản phẩm</div>
+    <input type="text" placeholder="Nhập mã hoặc tên sản phẩm">
+    <div class="sec-title">Tìm theo lô</div>
+    <input type="text" placeholder="Nhập số lô">
+    <div class="sec-title">Theo nhà cung cấp</div>
+    <input type="text" placeholder="Mã hoặc tên nhà cung cấp">
+    <div class="sec-title">Ngày giao dịch</div>
+    <div style="font-size:10.5px;color:#8fa3c0;margin-bottom:2px">Từ ngày</div>
+    <input type="date" value="2026-01-01">
+    <div style="font-size:10.5px;color:#8fa3c0;margin-bottom:2px">Đến ngày</div>
+    <input type="date" value="2026-06-30">
+    <div class="sec-title">Người nhập hàng</div>
+    <select><option>Chọn người nhập</option></select>
+    <div class="sec-title">Người tạo</div>
+    <select><option>Chọn người tạo</option></select>
+    <div class="sec-title">Trạng thái phiếu</div>
+    <select><option>Tất cả</option><option>Đã đặt hàng</option><option>Hoàn thành</option></select>
+    <button class="search-btn" style="margin-top:8px">🔍 Tìm kiếm</button>
+  </div>
+
+  <div class="screen-main">
+    <div class="breadcrumb"><a href="#" onclick="showPage('report');return false">Trang chủ</a> / Giao dịch / <span>Nhập hàng từ NCC</span></div>
+    <div class="content-card">
+      <div class="report-header">
+        <div><h2 class="page-title">PHIẾU NHẬP</h2>
+          <div style="display:flex;gap:12px;margin-top:6px;font-size:11.5px">
+            <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;background:#ffd54f;border-radius:50%;display:inline-block"></span>Chưa đồng bộ</span>
+            <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;background:#66bb6a;border-radius:50%;display:inline-block"></span>Đã đồng bộ</span>
+            <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;background:#ef5350;border-radius:50%;display:inline-block"></span>Đồng bộ lỗi</span>
+            <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;background:#90a4ae;border-radius:50%;display:inline-block"></span>Không hợp lệ</span>
+          </div>
+        </div>
+        <div class="page-actions">
+          <button class="btn-primary" onclick="showPage('new-receipt')">+ Tạo mới</button>
+          <button class="btn-outline">📄 Nhập từ file XML</button>
+          <button class="btn-outline">📥 Nhập dữ liệu</button>
+          <button class="btn-outline">🕐 Lịch sử nhập</button>
+          <button class="btn-outline">📤 Xuất dữ liệu</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table id="receipt-table">
+          <thead><tr>
+            <th style="width:36px">STT</th><th>Mã phiếu nhập</th><th>Ngày giao dịch</th>
+            <th>Ngày tạo</th><th>Nhà cung cấp</th>
+            <th class="r">Tổng phải trả</th><th class="r">Đã trả</th>
+            <th>Trạng thái</th><th>Hành động</th>
+          </tr></thead>
+          <tbody id="receipt-tbody"></tbody>
+        </table>
+      </div>
+      <div class="pagination-bar">
+        <select class="page-size-sel"><option>10</option><option>20</option></select>
+        <span class="page-info" id="receipt-pg-info"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     NEW RECEIPT SCREEN
+═══════════════════════════════════════════════════════ -->
+<div class="page-screen" id="screen-new-receipt" style="padding:14px;background:#f0f2f5">
+  <div class="breadcrumb" style="margin-bottom:12px"><a href="#" onclick="showPage('receipts');return false">Phiếu nhập</a> / <span>Tạo mới</span></div>
+  <div class="nr-layout">
+    <div class="nr-left">
+      <div class="nr-title">NHẬP HÀNG</div>
+      <div class="nr-search-wrap">
+        <input class="nr-search" id="nr-search-input" placeholder="Tìm kiếm sản phẩm theo tên, mã sản phẩm, mã vạch" autocomplete="off"
+          oninput="nrSearchProduct(this.value)" onfocus="nrSearchProduct(this.value)">
+        <span class="nr-search-icon">🔍</span>
+        <div class="nr-sugg-list" id="nr-sugg-list" style="display:none"></div>
+      </div>
+      <div class="table-wrap" style="min-height:200px">
+        <table class="nr-table">
+          <thead><tr>
+            <th style="width:28px">#</th>
+            <th style="min-width:180px">Thông tin sản phẩm</th>
+            <th>Đơn vị</th>
+            <th class="r">Số lượng</th>
+            <th class="r">Đơn giá</th>
+            <th>Nhà cung cấp</th>
+            <th class="r">Thành tiền</th>
+            <th style="width:28px"></th>
+          </tr></thead>
+          <tbody id="nr-items-tbody">
+            <tr><td colspan="8" class="empty-state" style="padding:40px">Chưa có sản phẩm. Tìm kiếm và chọn sản phẩm ở ô tìm kiếm trên.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="nr-total-row">
+        <span class="nr-total-lbl">Tổng tiền (<span id="nr-item-count">0</span> sản phẩm)</span>
+        <span class="nr-total-val" id="nr-total-val">0 đ</span>
+      </div>
+    </div>
+
+    <div class="nr-right">
+      <select class="nr-field" style="margin-bottom:10px;margin-top:0">
+        <option>HÀ - CN1 Trung Tâm</option>
+        <option>CN2 - Quận 1</option><option>CN3 - Quận 3</option>
+        <option>CN4 - Bình Thạnh</option><option>CN5 - Gò Vấp</option>
+      </select>
+      <div style="font-size:12px;color:#546e7a;margin-bottom:10px;text-align:right">📅 <span id="nr-date-display"></span></div>
+
+      <div class="nr-field-lbl">Nhà cung cấp</div>
+      <select class="nr-field" id="nr-ncc-sel">
+        <option value="">-- Chọn nhà cung cấp --</option>
+        <option>Dược Vương</option>
+        <option>Pharmalink</option>
+        <option>MEDCOMM 2026</option>
+        <option>NCC CÓ MST</option>
+        <option>NCC KO CÓ MÃ ST</option>
+        <option>Nhà cung cấp mặc định</option>
+      </select>
+
+      <div class="nr-field-lbl">Mã phiếu</div>
+      <input class="nr-field" type="text" id="nr-ma-phieu" placeholder="Tự động tạo nếu để trống">
+
+      <div class="nr-field-lbl">Tổng tiền[<span id="nr-count2">0</span>]</div>
+      <div style="text-align:right;font-size:18px;font-weight:700;color:#1565c0;padding:6px 0" id="nr-total2">0.00</div>
+
+      <div class="nr-field-lbl">Ghi chú</div>
+      <textarea class="nr-field" rows="3" placeholder="Ghi chú"></textarea>
+
+      <div style="display:flex;gap:8px;margin-top:14px">
+        <button class="btn-primary" style="flex:1" onclick="saveReceipt()">📥 Nhập hàng</button>
+        <button class="btn-outline" onclick="showPage('receipts')">↩ Trở về</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     LINK NCC MODAL
+═══════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-link-ncc" onclick="if(event.target===this)closeLinkNCC()">
+  <div class="modal-box" style="max-width:580px">
+    <div class="modal-header">
+      <h3 id="link-ncc-title">Liên kết nhà cung cấp</h3>
+      <button class="modal-close" onclick="closeLinkNCC()">✕</button>
+    </div>
+    <div class="modal-body" id="link-ncc-body">
+      <!-- Step 0: choose provider -->
+      <div id="lncc-choose">
+        <div style="font-size:13.5px;font-weight:600;color:#1a2744;margin-bottom:14px">Chọn nhà cung cấp để liên kết:</div>
+        <div class="provider-select-row">
+          <div class="provider-card" onclick="selectProvider('duocvuong')">
+            <div class="pc-icon">💊</div>
+            <div class="pc-name">Dược Vương</div>
+            <div class="pc-sub">Hệ thống phân phối dược phẩm</div>
+          </div>
+          <div class="provider-card" onclick="selectProvider('pharmalink')">
+            <div class="pc-icon">🔗</div>
+            <div class="pc-name">Pharmalink</div>
+            <div class="pc-sub">Nền tảng kết nối nhà thuốc</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stepper (hidden until provider chosen) -->
+      <div id="lncc-stepper" style="display:none">
+        <div style="font-size:12px;color:#546e7a;margin-bottom:10px">Đang liên kết với: <strong id="lncc-pname"></strong></div>
+        <div class="stepper-wrap" id="lncc-step-row">
+          <div class="step-item active" id="si0">
+            <div class="step-circle">1</div>
+            <div class="step-lbl">Đăng nhập</div>
+          </div>
+          <div class="step-item" id="si1">
+            <div class="step-circle">2</div>
+            <div class="step-lbl">Cập nhật giấy phép</div>
+          </div>
+          <div class="step-item" id="si2">
+            <div class="step-circle">3</div>
+            <div class="step-lbl">Liên kết sản phẩm</div>
+          </div>
+        </div>
+
+        <!-- Step body -->
+        <div class="step-body" id="lncc-step-body">
+          <!-- Step 1 content injected by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     PRODUCT CONFIG DIALOG (Cài đặt)
+═══════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-prod-config" onclick="if(event.target===this)closeProdConfig()">
+  <div class="modal-box" style="max-width:760px">
+    <div class="modal-header" style="background:#3a7bd5">
+      <h3 id="prod-config-title">THÔNG TIN SẢN PHẨM KHÁC</h3>
+      <button class="modal-close" onclick="closeProdConfig()">✕</button>
+    </div>
+    <div class="modal-body" style="padding:0">
+      <div class="dtab-bar" style="padding:0 16px;background:#f5f7fa">
+        <button class="dtab-btn active" onclick="switchProdTab('info',this)">Thông tin SP khác</button>
+        <button class="dtab-btn" onclick="switchProdTab('ton-cn',this)">Tồn theo chi nhánh</button>
+        <button class="dtab-btn" onclick="switchProdTab('ton-lo',this)">Tồn theo lô</button>
+        <button class="dtab-btn" onclick="switchProdTab('the-kho',this)">Thẻ kho</button>
+        <button class="dtab-btn" onclick="switchProdTab('doi-tac',this)">Đối tác</button>
+      </div>
+      <div style="padding:16px">
+        <!-- Tab: Info -->
+        <div class="dtab-content active" id="ptab-info">
+          <div class="pd-form-grid" id="prod-info-grid">
+            <!-- Filled by JS -->
+          </div>
+        </div>
+        <!-- Tab: Tồn CN -->
+        <div class="dtab-content" id="ptab-ton-cn">
+          <table style="width:100%;border-collapse:collapse;font-size:12.5px">
+            <thead><tr><th style="padding:7px 10px;background:#f5f7fa;border-bottom:2px solid #e8ecf0;text-align:left">Chi nhánh</th><th style="padding:7px 10px;background:#f5f7fa;border-bottom:2px solid #e8ecf0;text-align:right">Tồn kho</th></tr></thead>
+            <tbody><tr><td style="padding:7px 10px;border-bottom:1px solid #f0f3f6">CN1 - Trung Tâm</td><td style="padding:7px 10px;border-bottom:1px solid #f0f3f6;text-align:right">29</td></tr><tr><td style="padding:7px 10px;border-bottom:1px solid #f0f3f6">CN2 - Quận 1</td><td style="padding:7px 10px;text-align:right">0</td></tr></tbody>
+          </table>
+        </div>
+        <!-- Tab: Tồn lô -->
+        <div class="dtab-content" id="ptab-ton-lo"><div class="empty-state">Không có dữ liệu lô</div></div>
+        <!-- Tab: Thẻ kho -->
+        <div class="dtab-content" id="ptab-the-kho"><div class="empty-state">Không có dữ liệu thẻ kho</div></div>
+        <!-- Tab: Đối tác -->
+        <div class="dtab-content" id="ptab-doi-tac">
+          <div class="form-group" style="margin-bottom:12px">
+            <label class="rf-lbl">Chọn nhà cung cấp</label>
+            <select class="form-control" id="pt-ncc-sel" onchange="onPartnerNccChange(this.value)">
+              <option value="">-- Chọn nhà cung cấp --</option>
+              <option value="duocvuong">Dược Vương</option>
+              <option value="pharmalink">Pharmalink</option>
+              <option value="ncc3">NCC CÓ MST</option>
+              <option value="ncc4">NCC KO CÓ MÃ ST</option>
+              <option value="ncc5">TEST TRẢ HÀNG</option>
+              <option value="ncc6">MEDCOMM 2026</option>
+              <option value="ncc7">Nhà cung cấp mặc định</option>
+            </select>
+          </div>
+          <div id="pt-ncc-link-area" style="display:none">
+            <div class="form-group" style="margin-bottom:10px">
+              <label class="rf-lbl">Tên sản phẩm của nhà cung cấp</label>
+              <div class="partner-sp-wrap">
+                <input class="form-control" id="pt-sp-search" placeholder="Nhập tên sản phẩm..." oninput="searchPartnerSP(this.value)" autocomplete="off">
+                <div class="partner-sp-list" id="pt-sp-list" style="display:none"></div>
+              </div>
+            </div>
+            <div class="partner-sp-info" id="pt-sp-info" style="display:none">
+              <div class="sp-name" id="pt-sp-name"></div>
+              <div class="sp-meta" id="pt-sp-meta"></div>
+              <button class="btn-outline" style="margin-top:8px;font-size:11.5px;padding:4px 10px">👁 Xem chi tiết</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:8px;padding:12px 16px;border-top:1px solid #f0f0f0">
+        <button class="btn-primary" onclick="saveProdConfig()">💾 Lưu</button>
+        <button class="btn-outline" onclick="closeProdConfig()">✕ Hủy</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="site-footer">© 2020 © MEDCOMM VERSION: 2.3.3-05.04.23</div>
@@ -1236,6 +1794,433 @@ function exportCSV(){
   a.href=URL.createObjectURL(new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8'}));
   a.download=`bao-cao-${S.tc}-${Date.now()}.csv`;
   a.click();URL.revokeObjectURL(a.href);
+}
+
+// =====================================================================
+// APP STATE & EXTRA DATA
+// =====================================================================
+const APP = {
+  page: 'report',
+  linkedProducts: {}, // productMa -> providerKey
+  currentProdConfig: null,
+  nrItems: [],
+  receipts: []
+};
+
+// NCC data
+const NCC_LIST = [
+  {ma:'NCC00000006',ten:'NCC U8162C03',nhom:'Nhóm NCC mặc định',mst:'',sdt:'',no:0,tt:'Hoạt động'},
+  {ma:'NCC00000005',ten:'TEST TRẢ HÀNG',nhom:'Nhóm NCC mặc định',mst:'',sdt:'',no:60000,tt:'Hoạt động'},
+  {ma:'NCC00000004',ten:'NCC KO CÓ MÃ ST',nhom:'Nhóm NCC mặc định',mst:'',sdt:'',no:1538000,tt:'Hoạt động'},
+  {ma:'NCC00000003',ten:'NCC CÓ MST',nhom:'Nhóm NCC mặc định',mst:'024302541236',sdt:'',no:1005560000,tt:'Hoạt động'},
+  {ma:'NCC00000002',ten:'MEDCOMM 2026',nhom:'Nhóm NCC mặc định',mst:'',sdt:'',no:1027611813,tt:'Hoạt động'},
+  {ma:'NCC00000001',ten:'NHÀ CUNG CẤP MẶC ĐỊNH',nhom:'Nhóm NCC mặc định',mst:'',sdt:'0987656785',no:7000000,tt:'Hoạt động'},
+];
+
+// Product list data
+const PROD_LIST = [
+  {stt:1,ma:'SP00000032',ten:'Jardiance',dv:'Viên',gia_ban:29000,gia_dk:0,ton:29,tt:'Hoạt động'},
+  {stt:2,ma:'SRMATYSUN',ten:'Sữa rửa mặt Yoosun Acnes 100ml',dv:'Bộ',gia_ban:5000,gia_dk:0,ton:0,tt:'Hoạt động'},
+  {stt:3,ma:'SP00000031',ten:'sản phẩm của chi nhánh 2',dv:'Cái',gia_ban:5000,gia_dk:0,ton:1020,tt:'Hoạt động'},
+  {stt:4,ma:'SP00000022',ten:'Cefmidon',dv:'Viên',gia_ban:500000,gia_dk:0,ton:1138,tt:'Hoạt động'},
+  {stt:5,ma:'SP00000021',ten:'Zukalon 250 mcg/5ml',dv:'Ống',gia_ban:50000,gia_dk:0,ton:359,tt:'Hoạt động'},
+  {stt:6,ma:'SP00000020',ten:'Zukalon 250 mcg/5ml',dv:'Cái',gia_ban:500000,gia_dk:0,ton:110,tt:'Hoạt động'},
+  {stt:7,ma:'SP00000019',ten:'Kim tiêm',dv:'Cái',gia_ban:2500,gia_dk:0,ton:500,tt:'Hoạt động'},
+  {stt:8,ma:'SP00000018',ten:'kim tiêm 1',dv:'Cái',gia_ban:1000,gia_dk:0,ton:19,tt:'Hoạt động'},
+  {stt:9,ma:'SP00000017',ten:'Tocopin',dv:'Ống',gia_ban:10000,gia_dk:0,ton:0,tt:'Hoạt động'},
+  {stt:10,ma:'SP00000016',ten:'Mobexicam 10mg/ml',dv:'Ống',gia_ban:10000,gia_dk:0,ton:0,tt:'Hoạt động'},
+];
+
+// Receipt data
+const RECEIPT_LIST_DATA = [
+  {ma:'PN00000035',ngay_gd:'09/06/2026 10:47',ngay_tao:'09/06/2026 11:03',ncc:'MEDCOMM 2026',tong_phai_tra:297000,da_tra:0,tt:'Hoàn thành',sync:'done'},
+  {ma:'PN00000034',ngay_gd:'31/05/2026 00:00',ngay_tao:'09/06/2026 10:51',ncc:'NCC KO CÓ MÃ ST',tong_phai_tra:3743000.09,da_tra:0,tt:'Hoàn thành',sync:'error'},
+  {ma:'PN00000033',ngay_gd:'09/06/2026 08:56',ngay_tao:'09/06/2026 09:00',ncc:'NCC CÓ MST',tong_phai_tra:480000,da_tra:0,tt:'Hoàn thành',sync:'done'},
+  {ma:'PN00000032',ngay_gd:'08/06/2026 17:16',ngay_tao:'08/06/2026 17:16',ncc:'MEDCOMM 2026',tong_phai_tra:50000,da_tra:0,tt:'Hoàn thành',sync:'done'},
+  {ma:'PN00000031',ngay_gd:'03/06/2026 10:16',ngay_tao:'03/06/2026 14:16',ncc:'NCC CÓ MST',tong_phai_tra:0,da_tra:0,tt:'Hoàn thành',sync:'done'},
+  {ma:'PN00000030',ngay_gd:'02/06/2026 09:14',ngay_tao:'03/06/2026 09:14',ncc:'MEDCOMM 2026',tong_phai_tra:2507369.45,da_tra:0,tt:'Hoàn thành',sync:'done'},
+  {ma:'PN00000029',ngay_gd:'25/05/2026 09:48',ngay_tao:'25/05/2026 09:48',ncc:'NCC U8162C03',tong_phai_tra:100000,da_tra:100000,tt:'Hoàn thành',sync:'done'},
+];
+
+// Partner SP catalogue (Dược Vương & Pharmalink products for demo)
+const PARTNER_SP = {
+  duocvuong:[
+    {ma:'DV-001',ten:'Jardiance 10mg',gia:28000,donvi:'Viên',hang:'Boehringer'},
+    {ma:'DV-002',ten:'Amoxicillin 500mg DV',gia:1800,donvi:'Viên',hang:'DV Pharma'},
+    {ma:'DV-003',ten:'Paracetamol 500mg DV',gia:1200,donvi:'Viên',hang:'DV Pharma'},
+    {ma:'DV-004',ten:'Vitamin C 1000mg DV',gia:2800,donvi:'Viên',hang:'DV Health'},
+    {ma:'DV-005',ten:'Metformin 850mg DV',gia:1400,donvi:'Viên',hang:'DV Pharma'},
+  ],
+  pharmalink:[
+    {ma:'PL-001',ten:'Cefmidon 250mg PL',gia:45000,donvi:'Viên',hang:'PL Labs'},
+    {ma:'PL-002',ten:'Zukalon PL 250mcg',gia:48000,donvi:'Ống',hang:'PL Pharma'},
+    {ma:'PL-003',ten:'Jardiance PL 25mg',gia:30000,donvi:'Viên',hang:'PL Import'},
+    {ma:'PL-004',ten:'Omega-3 PL 1000mg',gia:8500,donvi:'Viên',hang:'PL Health'},
+  ]
+};
+
+// =====================================================================
+// PAGE NAVIGATION
+// =====================================================================
+function showPage(p){
+  APP.page=p;
+  // hide/show report layout
+  const reportEl=document.getElementById('screen-report');
+  const screens=['screen-ncc','screen-products','screen-receipts','screen-new-receipt'];
+  reportEl.style.display=(p==='report')?'flex':'none';
+  screens.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.style.display=(id==='screen-'+p)?((p==='new-receipt')?'block':'flex'):'none';
+  });
+  // active nav
+  document.querySelectorAll('.menubar a, .nav-dd-item').forEach(a=>a.classList.remove('active'));
+  const map={report:'nav-report',bc:'nav-bc',ncc:'nav-dt',products:'nav-sp',receipts:'nav-gd','new-receipt':'nav-gd'};
+  if(map[p]) document.getElementById(map[p])?.classList.add('active');
+  // init screens
+  if(p==='ncc') renderNCC();
+  if(p==='products') renderProdList();
+  if(p==='receipts') renderReceiptList();
+  if(p==='new-receipt') initNewReceipt();
+  window.scrollTo(0,0);
+}
+
+// =====================================================================
+// NCC SCREEN
+// =====================================================================
+function renderNCC(){
+  const tbody=document.getElementById('ncc-tbody');
+  tbody.innerHTML=NCC_LIST.map((r,i)=>`<tr>
+    <td>${i+1}</td>
+    <td><span style="color:#1a73e8;font-weight:500">${r.ma}</span></td>
+    <td><a style="color:#1a73e8;cursor:pointer">${r.ten}</a></td>
+    <td>${r.nhom}</td>
+    <td>${r.mst||''}</td>
+    <td>${r.sdt||''}</td>
+    <td class="r" style="color:${r.no>0?'#c62828':'#333'}">${fmt(r.no)}</td>
+    <td><span class="status-badge s-green">● ${r.tt}</span></td>
+    <td><button class="btn-detail">Cài đặt ⚙</button></td>
+  </tr>`).join('');
+  document.getElementById('ncc-pg-info').textContent=`Hiển thị 1–${NCC_LIST.length} trên ${NCC_LIST.length}`;
+}
+
+// ── LINK NCC DIALOG ──
+let lnccStep=0, lnccProvider='';
+function openLinkNCC(){
+  document.getElementById('lncc-choose').style.display='block';
+  document.getElementById('lncc-stepper').style.display='none';
+  document.querySelectorAll('.provider-card').forEach(c=>c.classList.remove('sel'));
+  document.getElementById('modal-link-ncc').classList.add('open');
+}
+function closeLinkNCC(){document.getElementById('modal-link-ncc').classList.remove('open')}
+
+function selectProvider(key){
+  lnccProvider=key; lnccStep=0;
+  document.querySelectorAll('.provider-card').forEach(c=>c.classList.remove('sel'));
+  event.currentTarget.classList.add('sel');
+  const name=key==='duocvuong'?'Dược Vương':'Pharmalink';
+  document.getElementById('lncc-pname').textContent=name;
+  document.getElementById('link-ncc-title').textContent='Liên kết với '+name;
+  document.getElementById('lncc-choose').style.display='none';
+  document.getElementById('lncc-stepper').style.display='block';
+  goLnccStep(0);
+}
+
+function goLnccStep(step){
+  lnccStep=step;
+  ['si0','si1','si2'].forEach((id,i)=>{
+    const el=document.getElementById(id);
+    el.className='step-item'+(i<step?' done':i===step?' active':'');
+  });
+  const body=document.getElementById('lncc-step-body');
+  const pName=lnccProvider==='duocvuong'?'Dược Vương':'Pharmalink';
+  if(step===0){
+    body.innerHTML=`
+      <div class="tab-bar" style="margin-bottom:14px">
+        <button class="tab-btn active" id="lnt-dn" onclick="switchLnTab('dn',this)">Đăng nhập</button>
+        <button class="tab-btn" id="lnt-dk" onclick="switchLnTab('dk',this)">Đăng ký</button>
+      </div>
+      <div id="lntab-dn" class="tab-content active">
+        <div class="form-group" style="margin-bottom:10px"><label>Số điện thoại</label><input class="form-control" placeholder="Nhập số điện thoại"></div>
+        <div class="form-group" style="margin-bottom:14px"><label>Mật khẩu</label><input class="form-control" type="password" placeholder="Nhập mật khẩu"></div>
+        <button class="btn-primary" style="width:100%" onclick="goLnccStep(1)">🔐 Đăng nhập vào ${pName}</button>
+      </div>
+      <div id="lntab-dk" class="tab-content">
+        <div class="form-row">
+          <div class="form-group"><label>Số điện thoại</label><input class="form-control" placeholder="Số điện thoại"></div>
+          <div class="form-group"><label>Mật khẩu</label><input class="form-control" type="password" placeholder="Mật khẩu"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Nhập lại mật khẩu</label><input class="form-control" type="password" placeholder="Nhập lại mật khẩu"></div>
+          <div class="form-group"><label>Tỉnh / Thành phố</label>
+            <select class="form-control"><option>-- Chọn tỉnh --</option><option>TP. Hồ Chí Minh</option><option>Hà Nội</option><option>Đà Nẵng</option><option>Cần Thơ</option><option>Bình Dương</option></select>
+          </div>
+        </div>
+        <label style="display:flex;align-items:center;gap:8px;font-size:12.5px;cursor:pointer;margin-bottom:14px">
+          <input type="checkbox"> Tôi đồng ý với <a href="#" style="color:#1565c0">điều khoản sử dụng</a>
+        </label>
+        <button class="btn-success" style="width:100%" onclick="goLnccStep(1)">📝 Đăng ký tài khoản ${pName}</button>
+      </div>`;
+  } else if(step===1){
+    body.innerHTML=`
+      <div style="text-align:center;padding:20px 0">
+        <div style="font-size:40px;margin-bottom:12px">📄</div>
+        <div style="font-size:15px;font-weight:700;color:#1a2744;margin-bottom:8px">Cập nhật giấy phép</div>
+        <div style="font-size:12.5px;color:#78909c;margin-bottom:20px">Vui lòng cập nhật giấy phép kinh doanh để hoàn tất liên kết với <strong>${pName}</strong></div>
+        <button class="btn-primary" onclick="goLnccStep(2)">📋 Cập nhật ngay</button>
+      </div>`;
+  } else if(step===2){
+    body.innerHTML=`
+      <div style="text-align:center;padding:20px 0">
+        <div style="font-size:40px;margin-bottom:12px">🔗</div>
+        <div style="font-size:15px;font-weight:700;color:#1a2744;margin-bottom:8px">Liên kết sản phẩm</div>
+        <div style="font-size:12.5px;color:#78909c;margin-bottom:20px">Liên kết sản phẩm của bạn với danh mục sản phẩm của <strong>${pName}</strong></div>
+        <button class="btn-success" onclick="closeLinkNCC();showPage('products')">🔗 Liên kết ngay</button>
+      </div>`;
+  }
+}
+
+function switchLnTab(t,btn){
+  document.querySelectorAll('#lncc-step-body .tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('#lncc-step-body .tab-content').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('lntab-'+t).classList.add('active');
+}
+
+// =====================================================================
+// PRODUCT LIST SCREEN
+// =====================================================================
+function renderProdList(){
+  const tbody=document.getElementById('prod-list-tbody');
+  tbody.innerHTML=PROD_LIST.map(r=>{
+    const link=APP.linkedProducts[r.ma];
+    const linkBadge=link?`<span class="badge-ncc-link">${link==='duocvuong'?'Dược Vương':'Pharmalink'}</span>`:'';
+    return `<tr>
+      <td>${r.stt}</td>
+      <td><span style="color:#1a73e8;font-weight:500">${r.ma}</span> 📋</td>
+      <td>${r.ten}${linkBadge}</td>
+      <td><select style="border:1px solid #cdd5e0;border-radius:3px;padding:2px 6px;font-size:12px"><option>${r.dv}</option></select></td>
+      <td class="r">${fmt(r.gia_ban)}.00</td>
+      <td class="r">${r.gia_dk}.00</td>
+      <td class="r">${fmt(r.ton)}</td>
+      <td><span class="status-badge s-green">● ${r.tt}</span></td>
+      <td><button class="btn-detail" onclick="openProdConfig(${r.stt-1})">Cài đặt ⚙</button></td>
+    </tr>`;
+  }).join('');
+  document.getElementById('prod-pg-info').textContent=`Hiển thị 1–${PROD_LIST.length} trên tổng ${PROD_LIST.length} sản phẩm`;
+}
+
+// ── PRODUCT CONFIG DIALOG ──
+function openProdConfig(idx){
+  const r=PROD_LIST[idx]; if(!r) return;
+  APP.currentProdConfig=idx;
+  document.getElementById('prod-config-title').textContent=r.ten.toUpperCase();
+  // Reset tabs
+  document.querySelectorAll('.dtab-btn').forEach((b,i)=>b.classList.toggle('active',i===0));
+  document.querySelectorAll('.dtab-content').forEach((c,i)=>c.classList.toggle('active',i===0));
+  // Fill info grid
+  document.getElementById('prod-info-grid').innerHTML=`
+    <div class="pd-img-row pd-form-full">
+      ${[0,1,2,3,4].map(()=>'<div class="pd-img-slot">📷</div>').join('')}
+    </div>
+    <div class="form-group"><label>Mã sản phẩm</label><input class="form-control" value="${r.ma}"></div>
+    <div class="form-group"><label>Tồn kho</label><input class="form-control" value="${r.ton}" readonly style="background:#f5f5f5"></div>
+    <div class="form-group pd-form-full"><label>Tên sản phẩm *</label><input class="form-control" value="${r.ten}"></div>
+    <div class="form-group pd-form-full"><label>Tên viết tắt</label><input class="form-control" placeholder="Tên viết tắt nếu có"></div>
+    <div class="form-group"><label>Nhóm sản phẩm *</label><select class="form-control"><option>Nhóm 1</option></select></div>
+    <div class="form-group"><label>Quy cách đóng gói</label><input class="form-control" placeholder=""></div>
+    <div class="form-group"><label>Số đăng ký</label><input class="form-control" placeholder=""></div>
+    <div class="form-group"><label>Giá đăng ký</label><input class="form-control" value="${r.gia_dk}"></div>
+    <div class="form-group"><label>Hãng sản xuất</label><input class="form-control" placeholder=""></div>
+    <div class="form-group"><label>Nước sản xuất</label><input class="form-control" placeholder=""></div>
+    <div class="form-group pd-form-full"><label>Đường dùng</label><input class="form-control" placeholder=""></div>
+    <div class="form-group pd-form-full"><label>Liều dùng / HDSD</label><input class="form-control" placeholder=""></div>
+    <div class="form-group"><label>Tồn nhỏ nhất</label><input class="form-control" value="0"></div>
+    <div class="form-group"><label>Tồn lớn nhất</label><input class="form-control" value="10000"></div>
+    <div class="pd-form-full">
+      <table class="pd-unit-table">
+        <thead><tr><th>#</th><th>Tên đơn vị *</th><th>Quy đổi *</th><th>Giá bán *</th><th>Mã</th><th>Mã vạch</th><th>Thao tác</th></tr></thead>
+        <tbody><tr>
+          <td><span style="color:#e53935;font-size:16px">🔑</span> 1</td>
+          <td><select class="form-control" style="padding:3px 6px"><option>${r.dv}</option><option>Hộp</option><option>Lọ</option></select></td>
+          <td><input class="form-control" value="1" style="width:60px;padding:3px 6px"> ${r.dv}</td>
+          <td><input class="form-control" value="${fmt(r.gia_ban)}" style="width:100px;padding:3px 6px"></td>
+          <td><input class="form-control" value="${r.ma}" style="width:100px;padding:3px 6px"></td>
+          <td><input class="form-control" style="width:100px;padding:3px 6px"></td>
+          <td></td>
+        </tr></tbody>
+      </table>
+      <button class="btn-outline" style="font-size:11.5px;padding:4px 10px">+ Thêm đơn vị tính</button>
+    </div>`;
+  // Pre-fill partner tab
+  const linked=APP.linkedProducts[r.ma];
+  const sel=document.getElementById('pt-ncc-sel');
+  sel.value=linked||'';
+  onPartnerNccChange(linked||'');
+  document.getElementById('modal-prod-config').classList.add('open');
+}
+function closeProdConfig(){document.getElementById('modal-prod-config').classList.remove('open')}
+function switchProdTab(tab,btn){
+  document.querySelectorAll('.dtab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.dtab-content').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('ptab-'+tab).classList.add('active');
+}
+function onPartnerNccChange(val){
+  const area=document.getElementById('pt-ncc-link-area');
+  area.style.display=(val==='duocvuong'||val==='pharmalink')?'block':'none';
+  document.getElementById('pt-sp-info').style.display='none';
+  document.getElementById('pt-sp-search').value='';
+  document.getElementById('pt-sp-list').style.display='none';
+}
+let ptSpTimeout=null;
+function searchPartnerSP(q){
+  clearTimeout(ptSpTimeout);
+  const list=document.getElementById('pt-sp-list');
+  if(!q){list.style.display='none';return;}
+  ptSpTimeout=setTimeout(()=>{
+    const prov=document.getElementById('pt-ncc-sel').value;
+    const items=(PARTNER_SP[prov]||[]).filter(p=>p.ten.toLowerCase().includes(q.toLowerCase()));
+    if(!items.length){list.style.display='none';return;}
+    list.innerHTML=items.map(p=>`<div class="partner-sp-item" onclick="selectPartnerSP('${p.ma}','${prov}')">
+      <span>${p.ten}</span><span style="font-size:11px;color:#888">${p.ma}</span>
+    </div>`).join('');
+    list.style.display='block';
+  },200);
+}
+function selectPartnerSP(ma,prov){
+  const items=PARTNER_SP[prov]||[];
+  const p=items.find(x=>x.ma===ma); if(!p)return;
+  document.getElementById('pt-sp-search').value=p.ten;
+  document.getElementById('pt-sp-list').style.display='none';
+  document.getElementById('pt-sp-info').style.display='block';
+  document.getElementById('pt-sp-name').textContent=p.ten;
+  document.getElementById('pt-sp-meta').innerHTML=`Mã: ${p.ma} &nbsp;|&nbsp; Đơn vị: ${p.donvi} &nbsp;|&nbsp; Đơn giá: ${fmt(p.gia)} đ &nbsp;|&nbsp; Hãng: ${p.hang}`;
+}
+function saveProdConfig(){
+  const idx=APP.currentProdConfig; if(idx==null)return;
+  const r=PROD_LIST[idx];
+  const nccVal=document.getElementById('pt-ncc-sel').value;
+  if(nccVal==='duocvuong'||nccVal==='pharmalink'){APP.linkedProducts[r.ma]=nccVal;}
+  else{delete APP.linkedProducts[r.ma];}
+  closeProdConfig();
+  renderProdList();
+  alert('✅ Đã lưu cấu hình sản phẩm!');
+}
+
+// =====================================================================
+// RECEIPT LIST SCREEN
+// =====================================================================
+function renderReceiptList(){
+  const all=[...APP.receipts,...RECEIPT_LIST_DATA];
+  const tbody=document.getElementById('receipt-tbody');
+  const syncDot={done:'🟢',error:'🔴',pending:'🟡',invalid:'⚪'};
+  tbody.innerHTML=all.map((r,i)=>`<tr>
+    <td>${i+1} ${syncDot[r.sync]||'🟡'}</td>
+    <td style="color:#1a73e8;font-weight:500">${r.ma} 📋</td>
+    <td>${r.ngay_gd}</td>
+    <td>${r.ngay_tao}</td>
+    <td>${r.ncc}</td>
+    <td class="r">${fmtDec(r.tong_phai_tra)}</td>
+    <td class="r">${fmtDec(r.da_tra)}</td>
+    <td><span class="status-badge s-green">● ${r.tt}</span></td>
+    <td><button class="btn-detail">Cài đặt ⚙</button></td>
+  </tr>`).join('');
+  document.getElementById('receipt-pg-info').textContent=`Hiển thị 1–${all.length} trên ${all.length}`;
+}
+function fmtDec(n){return(n||0).toLocaleString('vi-VN',{minimumFractionDigits:2,maximumFractionDigits:2})}
+
+// =====================================================================
+// NEW RECEIPT SCREEN
+// =====================================================================
+function initNewReceipt(){
+  APP.nrItems=[];
+  document.getElementById('nr-search-input').value='';
+  document.getElementById('nr-sugg-list').style.display='none';
+  document.getElementById('nr-ma-phieu').value='PN'+Date.now().toString().slice(-8);
+  document.getElementById('nr-date-display').textContent=new Date().toLocaleDateString('vi-VN')+' '+new Date().toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'});
+  renderNrItems();
+}
+
+let nrSuggTimeout=null;
+function nrSearchProduct(q){
+  clearTimeout(nrSuggTimeout);
+  const list=document.getElementById('nr-sugg-list');
+  if(!q){list.style.display='none';return;}
+  nrSuggTimeout=setTimeout(()=>{
+    const items=PROD_LIST.filter(p=>p.ten.toLowerCase().includes(q.toLowerCase())||p.ma.toLowerCase().includes(q.toLowerCase()));
+    // always show some if empty query shown on focus
+    const show=q.length<2?PROD_LIST.slice(0,6):items.slice(0,8);
+    if(!show.length){list.style.display='none';return;}
+    list.innerHTML=show.map(p=>{
+      const link=APP.linkedProducts[p.ma];
+      const tag=link?`<span class="nr-sugg-tag">${link==='duocvuong'?'Dược Vương':'Pharmalink'}</span>`:'';
+      return`<div class="nr-sugg-item" onclick="nrSelectProduct('${p.ma}')">
+        <span class="nr-sugg-name">${p.ten} <span style="color:#888;font-size:11px">(${p.dv})</span></span>
+        ${tag}
+      </div>`;
+    }).join('');
+    list.style.display='block';
+  },150);
+}
+
+// Show suggestions on focus
+document.addEventListener('DOMContentLoaded',()=>{
+  const inp=document.getElementById('nr-search-input');
+  if(inp) inp.addEventListener('focus',()=>nrSearchProduct(inp.value||' '));
+});
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.nr-search-wrap')) document.getElementById('nr-sugg-list').style.display='none';
+  if(!e.target.closest('.partner-sp-wrap')) document.getElementById('pt-sp-list').style.display='none';
+});
+
+function nrSelectProduct(ma){
+  const p=PROD_LIST.find(x=>x.ma===ma); if(!p)return;
+  document.getElementById('nr-sugg-list').style.display='none';
+  document.getElementById('nr-search-input').value='';
+  const link=APP.linkedProducts[p.ma];
+  APP.nrItems.push({ma:p.ma,ten:p.ten,dv:p.dv,sl:1,gia:p.gia_ban,ncc:link?(link==='duocvuong'?'Dược Vương':'Pharmalink'):(document.getElementById('nr-ncc-sel').value||'')});
+  renderNrItems();
+}
+
+function renderNrItems(){
+  const tbody=document.getElementById('nr-items-tbody');
+  if(!APP.nrItems.length){
+    tbody.innerHTML=`<tr><td colspan="8" class="empty-state" style="padding:40px">Chưa có sản phẩm. Tìm kiếm và chọn sản phẩm ở ô tìm kiếm trên.</td></tr>`;
+    updateNrTotal();return;
+  }
+  tbody.innerHTML=APP.nrItems.map((item,i)=>`<tr>
+    <td>${i+1}</td>
+    <td><div style="font-weight:500">${item.ten}</div><div style="font-size:11px;color:#888">${item.ma}</div></td>
+    <td>${item.dv}</td>
+    <td class="r"><input class="nr-qty-input" type="number" min="1" value="${item.sl}" onchange="nrChangeQty(${i},this.value)"></td>
+    <td class="r"><input class="nr-price-input" type="text" value="${fmt(item.gia)}" onchange="nrChangePrice(${i},this.value)"></td>
+    <td><span style="font-size:11.5px;color:#1565c0">${item.ncc||'—'}</span></td>
+    <td class="r" style="font-weight:600">${fmt(item.sl*item.gia)}</td>
+    <td><button class="btn-del-row" onclick="nrRemove(${i})">✕</button></td>
+  </tr>`).join('');
+  updateNrTotal();
+}
+function nrChangeQty(i,v){APP.nrItems[i].sl=Math.max(1,parseInt(v)||1);renderNrItems();}
+function nrChangePrice(i,v){APP.nrItems[i].gia=parseInt((v+'').replace(/\D/g,''))||0;renderNrItems();}
+function nrRemove(i){APP.nrItems.splice(i,1);renderNrItems();}
+function updateNrTotal(){
+  const total=APP.nrItems.reduce((s,x)=>s+x.sl*x.gia,0);
+  const cnt=APP.nrItems.length;
+  document.getElementById('nr-item-count').textContent=cnt;
+  document.getElementById('nr-count2').textContent=cnt;
+  document.getElementById('nr-total-val').textContent=fmt(total)+' đ';
+  document.getElementById('nr-total2').textContent=fmtDec(total);
+}
+function saveReceipt(){
+  if(!APP.nrItems.length){alert('Vui lòng thêm ít nhất 1 sản phẩm!');return;}
+  const ma=document.getElementById('nr-ma-phieu').value||'PN'+Date.now().toString().slice(-8);
+  const ncc=document.getElementById('nr-ncc-sel').value||'—';
+  const total=APP.nrItems.reduce((s,x)=>s+x.sl*x.gia,0);
+  const now=new Date();
+  const fmt2=d=>d.toLocaleDateString('vi-VN')+' '+d.toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'});
+  APP.receipts.unshift({ma,ngay_gd:fmt2(now),ngay_tao:fmt2(now),ncc,tong_phai_tra:total,da_tra:0,tt:'Đã đặt hàng',sync:'pending'});
+  alert(`✅ Đã tạo phiếu nhập hàng "${ma}"\nTrạng thái: Đã đặt hàng`);
+  showPage('receipts');
 }
 </script>
 </body>
