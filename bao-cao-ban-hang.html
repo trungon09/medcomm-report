@@ -654,9 +654,6 @@ tbody tr:hover{background:#f8f9ff}
         </div>
         <div class="page-actions">
           <button class="btn-primary" onclick="showPage('new-receipt')">+ Tạo mới</button>
-          <button class="btn-outline">📄 Nhập từ file XML</button>
-          <button class="btn-outline">📥 Nhập dữ liệu</button>
-          <button class="btn-outline">🕐 Lịch sử nhập</button>
           <button class="btn-outline">📤 Xuất dữ liệu</button>
         </div>
       </div>
@@ -701,12 +698,11 @@ tbody tr:hover{background:#f8f9ff}
             <th>Đơn vị</th>
             <th class="r">Số lượng</th>
             <th class="r">Đơn giá</th>
-            <th>Nhà cung cấp</th>
             <th class="r">Thành tiền</th>
             <th style="width:28px"></th>
           </tr></thead>
           <tbody id="nr-items-tbody">
-            <tr><td colspan="8" class="empty-state" style="padding:40px">Chưa có sản phẩm. Tìm kiếm và chọn sản phẩm ở ô tìm kiếm trên.</td></tr>
+            <tr><td colspan="7" class="empty-state" style="padding:40px">Chưa có sản phẩm. Tìm kiếm và chọn sản phẩm ở ô tìm kiếm trên.</td></tr>
           </tbody>
         </table>
       </div>
@@ -747,6 +743,88 @@ tbody tr:hover{background:#f8f9ff}
       <div style="display:flex;gap:8px;margin-top:14px">
         <button class="btn-primary" style="flex:1" onclick="saveReceipt()">📥 Nhập hàng</button>
         <button class="btn-outline" onclick="showPage('receipts')">↩ Trở về</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     ORDER CONFIRM MODAL
+═══════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-order-confirm" onclick="if(event.target===this)closeOrderConfirm()">
+  <div class="modal-box" style="max-width:860px;padding:0;overflow:hidden">
+    <div class="modal-header" style="padding:14px 20px">
+      <h3>Xác nhận đơn đặt hàng</h3>
+      <button class="modal-close" onclick="closeOrderConfirm()">✕</button>
+    </div>
+    <div style="display:flex;gap:0;align-items:flex-start">
+      <!-- LEFT: delivery + products -->
+      <div style="flex:1;padding:20px;overflow-y:auto;max-height:72vh;border-right:1px solid #e8edf3">
+        <!-- Delivery info -->
+        <div style="border:1px solid #e0e0e0;border-radius:8px;padding:14px 16px;margin-bottom:14px">
+          <div style="font-weight:700;font-size:13.5px;color:#1a2744;margin-bottom:10px">Thông tin nhận hàng</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="width:10px;height:10px;background:#1565c0;border-radius:50%;display:inline-block;border:2px solid #fff;box-shadow:0 0 0 2px #1565c0"></span>
+            <span style="font-weight:600;font-size:13px" id="oc-name">Chi nhánh</span>
+            <span style="margin-left:auto;cursor:pointer;color:#1565c0;font-size:12px">✏️</span>
+          </div>
+          <div style="font-size:12.5px;color:#546e7a;display:flex;gap:8px;align-items:center;margin-bottom:4px">
+            <span>📞</span><span id="oc-phone">—</span>
+          </div>
+          <div style="font-size:12.5px;color:#546e7a;display:flex;gap:8px;align-items:center">
+            <span>📍</span><span id="oc-addr">Địa chỉ chi nhánh</span>
+          </div>
+        </div>
+        <!-- Products -->
+        <div style="border:1px solid #e0e0e0;border-radius:8px;overflow:hidden;margin-bottom:14px">
+          <div style="display:grid;grid-template-columns:1fr 80px 100px 100px;padding:8px 14px;background:#f8fafc;font-size:11.5px;font-weight:600;color:#546e7a;border-bottom:1px solid #e8edf3">
+            <span>Tên sản phẩm</span><span style="text-align:center">Số lượng</span><span style="text-align:right">Đơn giá</span><span style="text-align:right">Thành tiền</span>
+          </div>
+          <div id="oc-items"></div>
+        </div>
+        <!-- Shipping method -->
+        <div style="font-weight:700;font-size:13px;color:#c62828;margin-bottom:8px">Hình thức vận chuyển</div>
+        <div style="border:2px solid #1565c0;border-radius:8px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div style="font-size:13px;font-weight:600;color:#1a2744">Giao Hàng Tiêu Chuẩn 🛈 🗑</div>
+            <div style="font-size:11.5px;color:#546e7a;margin-top:3px">Áp dụng phương thức thanh toán bằng tiền mặt và chuyển khoản</div>
+          </div>
+          <span style="font-weight:700;color:#1a2744;font-size:13px">30.000 đ</span>
+        </div>
+      </div>
+      <!-- RIGHT: order summary -->
+      <div style="width:280px;padding:20px;background:#fafbfc;flex-shrink:0">
+        <div style="font-weight:700;font-size:13.5px;color:#1a2744;margin-bottom:14px">Thông tin đơn hàng</div>
+        <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:8px">
+          <span style="color:#546e7a">Số lượng hàng</span><span id="oc-qty" style="font-weight:600">0</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:8px">
+          <span style="color:#546e7a">Giá gốc</span><span id="oc-subtotal" style="font-weight:600">0 đ</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:8px">
+          <span style="color:#546e7a">Giảm giá trực tiếp</span><span style="font-weight:600">0 đ</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:10px;padding-top:6px;border-top:1px solid #e8edf3">
+          <span>Giá trị đơn hàng <span style="font-size:10px;cursor:pointer">ℹ</span></span><span id="oc-value">0 đ</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:8px">
+          <span style="color:#546e7a">Giảm giá Voucher</span><span style="font-weight:600">0 đ</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:10px">
+          <span style="color:#546e7a">Phí vận chuyển</span><span style="font-weight:600">30.000 đ</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:14px;font-weight:700;padding-top:8px;border-top:2px solid #e8edf3;margin-bottom:16px">
+          <span>Tổng tiền</span><span id="oc-total" style="color:#c62828">0 đ</span>
+        </div>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12px;color:#546e7a;cursor:pointer;margin-bottom:8px">
+          <input type="checkbox" style="margin-top:2px"> Tôi đồng ý với <a href="#" style="color:#1565c0">Điều khoản sử dụng</a>
+        </label>
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:12px;color:#546e7a;cursor:pointer;margin-bottom:16px">
+          <input type="checkbox" style="margin-top:2px"> Yêu cầu xuất hóa đơn giấy
+        </label>
+        <button onclick="confirmOrder()" style="width:100%;background:#c62828;color:#fff;border:none;border-radius:6px;padding:12px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px">
+          🛒 Đặt hàng
+        </button>
       </div>
     </div>
   </div>
@@ -2194,7 +2272,6 @@ function renderNrItems(){
     <td>${item.dv}</td>
     <td class="r"><input class="nr-qty-input" type="number" min="1" value="${item.sl}" onchange="nrChangeQty(${i},this.value)"></td>
     <td class="r"><input class="nr-price-input" type="text" value="${fmt(item.gia)}" onchange="nrChangePrice(${i},this.value)"></td>
-    <td><span style="font-size:11.5px;color:#1565c0">${item.ncc||'—'}</span></td>
     <td class="r" style="font-weight:600">${fmt(item.sl*item.gia)}</td>
     <td><button class="btn-del-row" onclick="nrRemove(${i})">✕</button></td>
   </tr>`).join('');
@@ -2213,13 +2290,51 @@ function updateNrTotal(){
 }
 function saveReceipt(){
   if(!APP.nrItems.length){alert('Vui lòng thêm ít nhất 1 sản phẩm!');return;}
+  // Populate confirm dialog
+  const branchMap={
+    'HÀ - CN1 Trung Tâm':{phone:'0901 234 567',addr:'123 Đinh Tiên Hoàng, P.1, Q.1, TP.HCM'},
+    'CN2 - Quận 1':{phone:'0901 234 568',addr:'45 Nguyễn Huệ, P.Bến Nghé, Q.1, TP.HCM'},
+    'CN3 - Quận 3':{phone:'0901 234 569',addr:'67 Võ Văn Tần, P.6, Q.3, TP.HCM'},
+    'CN4 - Bình Thạnh':{phone:'0901 234 570',addr:'89 Đinh Bộ Lĩnh, P.26, Q.Bình Thạnh, TP.HCM'},
+    'CN5 - Gò Vấp':{phone:'0901 234 571',addr:'12 Quang Trung, P.10, Q.Gò Vấp, TP.HCM'},
+  };
+  const branchSel=document.querySelector('#screen-new-receipt .nr-right select').value;
+  const info=branchMap[branchSel]||{phone:'—',addr:'—'};
+  document.getElementById('oc-name').textContent=branchSel;
+  document.getElementById('oc-phone').textContent=info.phone;
+  document.getElementById('oc-addr').textContent=info.addr;
+  // Items
+  const total=APP.nrItems.reduce((s,x)=>s+x.sl*x.gia,0);
+  const totalQty=APP.nrItems.reduce((s,x)=>s+x.sl,0);
+  const grandTotal=total+30000;
+  document.getElementById('oc-qty').textContent=totalQty;
+  document.getElementById('oc-subtotal').textContent=fmt(total)+' đ';
+  document.getElementById('oc-value').textContent=fmt(total)+' đ';
+  document.getElementById('oc-total').textContent=fmt(grandTotal)+' đ';
+  document.getElementById('oc-items').innerHTML=APP.nrItems.map(item=>`
+    <div style="display:grid;grid-template-columns:1fr 80px 100px 100px;padding:10px 14px;border-bottom:1px solid #f0f2f5;align-items:center;gap:4px">
+      <div>
+        <div style="font-size:12.5px;font-weight:500;color:#1a2744">${item.ten}</div>
+        <div style="font-size:11px;color:#90a4ae">${item.ma} · ${item.dv}</div>
+        ${item.ncc?`<div style="font-size:10.5px;color:#ef5350;margin-top:2px">Tối đa 100 sản phẩm trên đơn</div>`:''}
+      </div>
+      <div style="text-align:center;font-size:12.5px">${item.sl}</div>
+      <div style="text-align:right;font-size:12.5px">${fmt(item.gia)} đ</div>
+      <div style="text-align:right;font-size:13px;font-weight:700;color:#1565c0">${fmt(item.sl*item.gia)} đ</div>
+    </div>`).join('');
+  document.getElementById('modal-order-confirm').classList.add('open');
+}
+
+function closeOrderConfirm(){document.getElementById('modal-order-confirm').classList.remove('open')}
+
+function confirmOrder(){
   const ma=document.getElementById('nr-ma-phieu').value||'PN'+Date.now().toString().slice(-8);
   const ncc=document.getElementById('nr-ncc-sel').value||'—';
-  const total=APP.nrItems.reduce((s,x)=>s+x.sl*x.gia,0);
+  const total=APP.nrItems.reduce((s,x)=>s+x.sl*x.gia,0)+30000;
   const now=new Date();
   const fmt2=d=>d.toLocaleDateString('vi-VN')+' '+d.toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'});
   APP.receipts.unshift({ma,ngay_gd:fmt2(now),ngay_tao:fmt2(now),ncc,tong_phai_tra:total,da_tra:0,tt:'Đã đặt hàng',sync:'pending'});
-  alert(`✅ Đã tạo phiếu nhập hàng "${ma}"\nTrạng thái: Đã đặt hàng`);
+  closeOrderConfirm();
   showPage('receipts');
 }
 </script>
